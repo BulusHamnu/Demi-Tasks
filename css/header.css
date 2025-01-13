@@ -1,0 +1,112 @@
+/* CSS Reset and basic styling */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Oswald:wght@200..700&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+    /* Primary and Secondary Colors */
+    --primary-color: rgba(248, 250, 252, 1);
+    --secondary-color: rgba(217, 234, 252, 1);
+    --secondary-color-2: rgba(188, 204, 220, 1);
+
+    /* Task Status Colors */
+    --in-progress-color: rgba(255, 204, 0, 1);
+    --in-progress-dark: rgba(149, 123, 17, 1);
+    --completed-color: rgba(34, 255, 0, 1);
+    --completed-dark: rgba(40, 126, 27, 1);
+    --incomplete-color: rgba(197, 163, 163, 1);
+    --overdue-color: rgba(255, 0, 0, 1);
+
+    /* Text and Danger Colors */
+    --text-color: rgba(0, 0, 0, 1);
+    --danger-color: rgba(255, 1, 1, 1);
+
+    /* Priority and Category Colors */
+    --high-priority-color: rgba(194, 11, 11, 1);
+    --medium-priority-color: rgba(185, 125, 36, 1);
+    --business-category-color: rgba(30, 58, 138, 1);
+
+}
+
+body {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+
+/* Dark Theme Colors */
+body.dark-theme {
+    /* Background Colors */
+    --primary-color: rgba(15, 23, 42, 1); 
+    --secondary-color: rgba(31, 41, 55, 1); 
+    --secondary-color-2: rgba(55, 65, 81, 1); 
+
+    /* Task Status Colors */
+    --in-progress-dark: rgba(201, 160, 45, 1); 
+    --completed-color: rgba(56, 255, 100, 1); 
+    --completed-dark: rgba(34, 139, 58, 1); 
+    --incomplete-color: rgba(149, 99, 99, 1); 
+    --overdue-color: rgba(255, 77, 77, 1); 
+
+    /* Text and Danger Colors */
+    --text-color: rgba(229, 229, 229, 1); 
+    --danger-color: rgba(255, 69, 69, 1); 
+
+    /* Priority and Category Colors */
+    --high-priority-color: rgba(255, 71, 71, 1); 
+    --medium-priority-color: rgba(232, 150, 69, 1); 
+    --business-category-color: rgba(59, 130, 246, 1); 
+}
+
+.container {
+    max-width: 1320px;
+    margin: 0 auto;
+    background-color: var(--primary-color);
+}
+
+header {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    height: 3.5rem;
+}
+
+
+
+
+
+/* Media queries */
+
+@media (max-width: 575.98px) {
+    
+}
+  
+  
+@media (min-width: 576px) {
+    
+}
+  
+
+@media (min-width: 768px) {
+    
+}
+  
+
+@media (min-width: 992px) {
+    
+}
+  
+  
+@media (min-width: 1200px) {
+    
+}
+  
+  
+@media (min-width: 1400px) {
+    
+}
+  
+
