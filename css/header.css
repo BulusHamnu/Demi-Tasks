@@ -93,6 +93,11 @@ header {
 .logo {
     margin-right: auto;
     font-size: 1.5rem;
+    transition: all 0.2s linear;
+    cursor: pointer;
+}
+.logo:hover {
+    border-bottom: 2px solid var(--text-color);
 }
 
 /* notification */
@@ -103,6 +108,7 @@ header {
     padding: .2rem;
     border-radius: 50%;
     cursor: pointer;
+    transition: all 0.3s linear;
 }
 .notification:hover {
     background-color: var(--secondary-color);
@@ -117,13 +123,14 @@ header {
     height: 10px;
     border-radius: 50%;
     display: none;
+    transition: all 0.3s linear;
 }
 .notification.new-message::after {
     display: block;
 }
 
 /* all svg color code */
-svg {
+svg:not(.search-item) {
     fill: var(--text-color);
 }
 
@@ -135,6 +142,7 @@ svg {
     width: 2rem;
     border-radius: 50%;
     cursor: pointer;
+    transition: all 0.3s linear;
 }
 
 

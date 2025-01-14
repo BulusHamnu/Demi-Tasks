@@ -2,6 +2,12 @@
 main.search {
     background-color: #933131;
 }
+
+.logo a {
+    color: var(--text-color);
+    text-decoration: none;
+    cursor: pointer;
+}
 /* Search ux button */
 .search-button {
     padding: .2rem;
@@ -9,6 +15,7 @@ main.search {
     width: 2rem;
     border-radius: 50%;
     cursor: pointer;
+    transition: all 0.3s linear;
 }
 
 .search-button-cancel {
@@ -60,6 +67,7 @@ main.search {
 }
 
 
+
 .search-cont {
     position: relative;
 }
@@ -69,6 +77,13 @@ main.search {
       top: 11%;
 
     cursor: pointer;
+    transition: all 0.3s linear;
+    padding: .1rem ;
+    border-radius: 5px;
+    fill: black;
+}
+.search-item:hover {
+    background-color: var(--secondary-color);
 }
 
 .search-box {
@@ -78,6 +93,7 @@ main.search {
     font-size: 1.2rem;
     border: 1px solid var(--secondary-color);
 }
+
 
 
 
