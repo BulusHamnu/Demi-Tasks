@@ -7,6 +7,8 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+/* Color variable */
 :root {
     /* Primary and Secondary Colors */
     --primary-color: rgba(248, 250, 252, 1);
@@ -32,9 +34,15 @@
 
 }
 
+/* body */
 body {
     background-color: var(--primary-color);
     color: var(--text-color);
+    min-height: 100vh;
+}
+
+main {
+    padding: .8rem;
 }
 
 
@@ -69,10 +77,87 @@ body.dark-theme {
 }
 
 header {
-    background-color: var(--secondary-color);
     color: var(--text-color);
-    height: 3.5rem;
+    min-height: 3.5rem;
+    padding: .5rem .7rem;
+    display: flex;
+    align-items: center;
+    gap: 1.3rem;
+    margin-bottom: .8rem;
+    position: relative;
+
+
 }
+
+/* Logo */
+.logo {
+    margin-right: auto;
+    font-size: 1.5rem;
+}
+
+/* notification */
+.notification {
+    position: relative;
+    height: 2rem;
+    width: 2rem;
+    padding: .2rem;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.notification:hover {
+    background-color: var(--secondary-color);
+}
+.notification::after {
+    content:  "";
+    position: absolute;
+        right: 20%;
+        top: 10%;
+    background-color: blue;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: none;
+}
+.notification.new-message::after {
+    display: block;
+}
+
+/* all svg color code */
+svg {
+    fill: var(--text-color);
+}
+
+
+/* THeme switch button */
+.theme-switch {
+    padding: .2rem;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+.theme-switch:hover {
+    background-color: var(--secondary-color);
+}
+
+.light-icon {
+    display: none;
+}
+
+.theme-switch.dark-mode .dark-icon {
+    display: none;
+}
+.theme-switch.dark-mode .light-icon {
+    display: block;
+}
+
+
+
+
+
+
 
 
 
@@ -80,13 +165,11 @@ header {
 
 /* Media queries */
 
-@media (max-width: 575.98px) {
-    
-}
-  
   
 @media (min-width: 576px) {
-    
+    header {
+        padding: .5rem 3rem;
+    }
 }
   
 

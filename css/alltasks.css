@@ -1,0 +1,113 @@
+/* Task page styling */
+main.search {
+    background-color: #933131;
+}
+/* Search ux button */
+.search-button {
+    padding: .2rem;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.search-button-cancel {
+    display: none;
+}
+
+
+.search-button.search-open {
+    .search-button-search {
+        display: none;
+    } 
+    .search-button-cancel {
+        display: block;
+    } 
+    
+}
+
+
+.search-button:hover {
+    background-color: var(--secondary-color);
+}
+
+
+/* Search box ui/container */
+.search {
+    width: clamp(5rem,19rem,22rem);
+    height: fit-content;
+    margin: .5rem 0;
+    padding: .1rem 0;
+    gap: .5rem;
+    z-index: 4;
+    flex-flow: column nowrap;
+    position: absolute;
+       top: 100%;
+    display: none;
+}
+.search.show {
+    display: flex;
+}
+
+
+#search-filter {
+    width: 8rem;
+    font-size: 1.1rem;
+    padding: .25rem .5rem;
+    margin-left: auto;
+    border: 1px solid var(--secondary-color);
+    /* background-color: var(--primary-color); */
+}
+
+
+.search-cont {
+    position: relative;
+}
+.search-item {
+    position: absolute;
+      right: 3%;
+      top: 11%;
+
+    cursor: pointer;
+}
+
+.search-box {
+    width: 100%;
+    height: 2rem;
+    padding: .3rem 2.3rem .4rem .3rem;
+    font-size: 1.2rem;
+    border: 1px solid var(--secondary-color);
+}
+
+
+
+
+
+
+
+/* Media queries */
+@media (min-width: 328px) {
+    .search {
+        right: 7%;
+    }
+}
+
+
+
+
+
+@media (min-width: 768px) {
+    .search {
+        flex-flow: row nowrap; 
+        position: static;
+        width: 23rem;
+        display: flex;
+    }
+    .search-button {
+        display: none;
+    } 
+}
+
+
+
+
