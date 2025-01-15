@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/styles/index.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/index.js" defer></script>
+    
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/index.css">
 </head>
@@ -99,11 +102,13 @@
             </section>
             <section class="calander">
                 <h2>Calander</h2>
+
+                <div id="calendar"></div>
             </section>
         </main>
     </div>
 
     <script src="src/header.js"></script>
-    <script src="src/index.js"></script>
+    <script type="module" src="src/index.js"></script>
 </body>
 </html>
