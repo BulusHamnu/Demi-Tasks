@@ -1,6 +1,9 @@
 /* Dashboard scrpt */
 const { Calendar } = window.VanillaCalendarPro;
-let cat = 1;
+const taskChart = document.getElementById('task-chart');
+
+
+
 // https://vanilla-calendar.pro/docs/learn/handle-get-and-change-every-day
 
 
@@ -79,6 +82,36 @@ const options = {
 
 const calendar = new Calendar('#calendar', options);
 calendar.init();
+
+
+
+/* Initiaciating TaskChart */
+
+new Chart(taskChart, {
+  type: 'bar',
+  data: {
+    labels: ['12%', '19%', '5%', '15%'],
+    datasets: [{
+      label: 'Percentage of tasks',
+      data: [12, 19, 5, 15],
+      backgroundColor: [
+        'rgba(255, 204, 0, 1)',
+        'rgba(34, 255, 0, 1)',
+        'rgba(255, 0, 0, 1)',
+        'rgba(197, 163, 163, 1)'
+      ],
+      borderWidth: 1,
+      responsive : true,
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
 
 
 
