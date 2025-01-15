@@ -3,12 +3,12 @@ let searchItem = document.querySelector(".search-item");
 const searchButtonSearch = document.querySelector(".search-button-search")
 const searchButtonBancel = document.querySelector(".search-button-cancel");
 const searchButton = document.querySelector(".search-button");
-const main = document.querySelector("main");
+const header = document.querySelector("header");
 
 
 searchButton.addEventListener("click", () => {
     searchButton.classList.toggle("search-open")
-    main.classList.toggle("search")
+    header.classList.toggle("show-search")
     search.classList.toggle("show")
 })
 

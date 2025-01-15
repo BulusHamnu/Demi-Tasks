@@ -1,7 +1,4 @@
 /* Task page styling */
-main.search {
-    background-color: #933131;
-}
 
 .logo a {
     color: var(--text-color);
@@ -49,11 +46,15 @@ main.search {
     z-index: 4;
     flex-flow: column nowrap;
     position: absolute;
-       top: 100%;
-    display: none;
+       top: 35%;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .5s linear;
 }
 .search.show {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
 }
 
 
@@ -94,7 +95,12 @@ main.search {
     border: 1px solid var(--secondary-color);
 }
 
-
+header.show-search {
+    /* outline: 1px solid var(--text-color); */
+    height:  10rem;
+    align-items: flex-start;
+    padding-top: .75rem;
+}
 
 
 
@@ -116,8 +122,9 @@ main.search {
     .search {
         flex-flow: row nowrap; 
         position: static;
-        width: 23rem;
-        display: flex;
+        width: 25rem;
+        opacity: 1;
+        visibility: visible;
     }
     .search-button {
         display: none;
