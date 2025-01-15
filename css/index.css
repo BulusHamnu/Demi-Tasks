@@ -189,12 +189,36 @@ body.dark-theme .vc-date[data-vc-date-today] .vc-date__btn {
     position: absolute;
         top: -15%;
         left: 65%;
-    background-color: var(--secondary-color-2);
+    background-color: var(--secondary-color);
     height: 17px;
     width: 17px;
     border-radius: 50%;
     font-size: .7rem;
+    border: 1px solid var(--text-color);
+}
+
+/* tool tip not active yet */
+.vc-date__btn[aria-selected="true"]::before {
+    content: "sheudule tasks!";
+    position: absolute;
+        top: 50%;
+        left: 65%;
+    background-color: aliceblue;
+    padding: .5rem ;
+    width: 5rem;
+    border-radius: 5px;
+    font-size: .6rem;
     border: 1px solid black;
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+    transition: all 0.8s ease;
+}
+
+.vc-date__btn[aria-selected="true"]:hover::before {
+    visibility: visible;
+    opacity: 1;
 }
 
 

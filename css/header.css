@@ -78,7 +78,7 @@ body.dark-theme {
 
 header {
     color: var(--text-color);
-    min-height: 3.5rem;
+    height: 3.5rem;
     padding: .5rem .7rem;
     display: flex;
     align-items: center;

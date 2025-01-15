@@ -50,12 +50,13 @@
     display: flex;
     opacity: 0;
     visibility: hidden;
-    transition: all .5s linear;
+    transition: opacity .7s linear;
 }
 .search.show {
     opacity: 1;
     visibility: visible;
 }
+
 
 
 #search-filter {
@@ -78,7 +79,7 @@
       top: 11%;
 
     cursor: pointer;
-    transition: all 0.3s linear;
+    transition: hover 0.3s linear;
     padding: .1rem ;
     border-radius: 5px;
     fill: black;
@@ -86,6 +87,9 @@
 .search-item:hover {
     background-color: var(--secondary-color);
 }
+
+
+
 
 .search-box {
     width: 100%;
@@ -96,8 +100,7 @@
 }
 
 header.show-search {
-    /* outline: 1px solid var(--text-color); */
-    height:  10rem;
+    height:  9rem;
     align-items: flex-start;
     padding-top: .75rem;
 }
