@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/alltasks.css">
@@ -24,6 +25,7 @@
                 </div>
                 
                 <select name="search-filter" id="search-filter" >
+                    <option value="" disabled selected>Filter</option>
                     <option value="Priority">Priority</option>
                     <option value="Categories">Categories</option>
                     <option value="Status">Status</option>
@@ -49,11 +51,67 @@
         </header>
         
         <main >
-            
+            <div class="categories-tab">
+                <button class="active">All Task</button>
+                <button>✅ Completed</button>
+                <button>🔲 In completed</button>
+                <button>⏰ Over dued</button>
+                <button>🔄 In progres</button>
+            </div>
+            <div class="sorting-tab">
+                <label for="sort-category">Sort by:</label>
+                <select name="sort-category" id="sort-category">
+                    <option value="Busines">Busines</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Work">Work</option>
+                    <option value="Education">Education</option>
 
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ducimus sapiente quibusdam eveniet culpa possimus, inventore id nihil accusantium numquam cum at quasi provident, odit, tempora facilis? Ratione quis rem beatae.</p>
+                </select>
+            </div>
 
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem dolores ea et placeat omnis, quam in corporis facilis corrupti debitis! Fugiat ratione sapiente minus hic harum quasi totam. Laborum, odit.</p>
+            <section class="tab-grid">
+
+                <div class="task-card">
+                    <h3 class="task-headiing">Launch Marketing Campaign for New Product</h3>
+                    <div class="divider"></div>
+                    <p class="task-description">Develop and execute a comprehensive marketing campaign for the new product launch scheduled for February. The campaign should include social media promotion, email outreach</p>
+
+                    <span class="task-due">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M360-840v-80h240v80H360Zm80 440h80v-240h-80v240Zm40 320q-74 0-139.5-28.5T226-186q-49-49-77.5-114.5T120-440q0-74 28.5-139.5T226-694q49-49 114.5-77.5T480-800q62 0 119 20t107 58l56-56 56 56-56 56q38 50 58 107t20 119q0 74-28.5 139.5T734-186q-49 49-114.5 77.5T480-80Zm0-80q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-280Z"/></svg>
+                        <span class="task-due-date">22 jan 2025</span>
+                    </span>
+
+                    <div class="categories-label">
+                        <a href="" class="piyority" data-type="high">🔥 High</a>
+                        <a href="" class="category" data-type="business">💼 Business</a>
+                        <a href="" class="status" data-type="completed">✅ Completed</a>
+                    </div>
+                </div>
+                <div class="task-card">
+                    <h3 class="task-headiing">Write a Blog Post on Time Management Tips</h3>
+                    <div class="divider"></div>
+                    <p class="task-description">Create a 1,000-word blog post highlighting effective time management techniques for busy professionals. The post should cover methods like prioritization, the Pomodor</p>
+
+                    <span class="task-due">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M360-840v-80h240v80H360Zm80 440h80v-240h-80v240Zm40 320q-74 0-139.5-28.5T226-186q-49-49-77.5-114.5T120-440q0-74 28.5-139.5T226-694q49-49 114.5-77.5T480-800q62 0 119 20t107 58l56-56 56 56-56 56q38 50 58 107t20 119q0 74-28.5 139.5T734-186q-49 49-114.5 77.5T480-80Zm0-80q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-280Z"/></svg>
+                        <span class="task-due-date">22 jan 2025</span>
+                    </span>
+
+                    <div class="categories-label">
+                        <a href="" class="piyority" data-type="medium">🟡 Medium</a>
+                        <a href="" class="category" data-type="business">💼 Business</a>
+                        <a href="" class="status" data-type="in-progress">🔄 In progress</a>
+                    </div>
+                </div>
+                
+
+                <div class="task-card add-new-task" onclick="window.location.href=`create-new-task.html`">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+                    <h3 class="task-headiing">Add new task</h3>
+                </div>
+
+                
+            </section>
         </main>
     </div>
 

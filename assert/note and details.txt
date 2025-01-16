@@ -19,8 +19,7 @@ mediumPiyorityColor : #B97D24
 businessCategoryColor : #1E3A8A
 
 
-Launch Marketing Campaign for New Product
-Develop and execute a comprehensive marketing campaign for the new product launch scheduled for February. The campaign should include social media promotion, email outreach...
+
 
 Write a Blog Post on Time Management Tips
 Create a 1,000-word blog post highlighting effective time management techniques for busy professionals. The post should cover methods like prioritization, the Pomodor...

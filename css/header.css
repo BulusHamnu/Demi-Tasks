@@ -41,6 +41,7 @@ body {
     min-height: 100vh;
 }
 
+
 main {
     padding: .8rem;
 }
@@ -88,8 +89,11 @@ header {
     transition: all .5s linear;
 
 }
-
-
+/* fonts */
+h3 {
+    font-size: 1.3rem;
+    line-height: 2rem;
+}
 
 
 /* Logo */
@@ -191,6 +195,10 @@ svg:not(.search-item) {
     h2 {
         font-size: 1.5rem;
     }
+    h3 {
+        font-size: 1.4rem;
+    }
+    
 }
   
 
