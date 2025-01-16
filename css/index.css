@@ -258,16 +258,15 @@ body.dark-theme .vc-arrow:before {
 
 .taskanalysis .chart-container {
     margin-top: 1.3rem;
-    width: 100%;
-
+    width: 95%;
 }
 .highlight ul {
     list-style-type: none;
     display: flex;
     flex-flow: row wrap;
-    gap: 1rem;
+    gap: 1.5rem;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin: 1.5rem 0;
 }
 .highlight ul li span {
     height: 10px;
