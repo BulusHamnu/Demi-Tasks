@@ -145,7 +145,7 @@ header.show-search {
 /* sorting-tab */
 .sorting-tab {
     background-color: var(--secondary-color-2);
-    padding:  .4rem .5rem;
+    padding:  .3rem .5rem;
     border-radius: .3rem;
     display: flex;
     gap: .5rem;
@@ -316,6 +316,9 @@ header.show-search {
     .search-button {
         display: none;
     } 
+    .sorting-tab #sort-category {
+        font-size: 1rem;
+    }
 }
 
 
