@@ -78,6 +78,11 @@
     align-items: center;
     flex-flow: column;
     cursor: pointer;
+    transition: all .2s linear;
+}
+.task-details .detail-card:hover {
+    box-shadow: 1px 1px .1rem  var(--text-color),
+                -1px -1px .1rem  var(--text-color) ;
 }
 
 /* task progress bar */
@@ -166,7 +171,12 @@
     color: var(--text-color);
     background-color: var(--secondary-color-2);
     border: 1px solid var(--text-color);
+    transition: all 0.2s linear;
 }
+.vc-date__btn:hover {
+    border: 1px solid var(--secondary-color);
+}
+
 .vc-year, .vc-month {
     color: var(--text-color);
 }

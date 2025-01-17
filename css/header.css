@@ -13,7 +13,7 @@
     /* Primary and Secondary Colors */
     --primary-color: rgba(248, 250, 252, 1);
     --secondary-color: rgba(217, 234, 252, 1);
-    --secondary-color-2: rgba(188, 204, 220, 1);
+    --secondary-color-2: rgb(196, 212, 228);
 
     /* Task Status Colors */
     --in-progress-color: rgba(255, 204, 0, 1);
