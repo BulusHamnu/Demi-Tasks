@@ -3,9 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task | Demi-Tasks</title>
+    <title>New task | Demi-Tasks</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/styles/index.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/index.js" defer></script>
+
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/create-new-task.css">
 </head>
-<body>
-    
+<body >
+    <div class="container">
+        <header>
+            <a class="logo" href="alltasks.html">Back to Tasks</a>
+        </header>
+
+        <main >
+            <h1>Create new task</h1>
+            <section class="about-task">
+                <div class="tittle">
+                    <label for="task-title">title</label>
+                    <input type="text" id="task-title" placeholder="complete portfolio design">
+                </div>
+                <div class="description">
+                    <label for="task-description">description</label>
+                    <textarea id="task-description" placeholder="Work on landing page and design"></textarea>
+                </div>
+                <div class="task-piyority">
+                    <label for="task-piority">priority</label>
+                    <div class="piyorities">
+                        <label for="high-piyority">
+                            <input type="radio" id="high-piyority" name="task-piority" value="high">
+                            🔥 High
+                        </label>
+                        <label for="medium-piyority">
+                            <input type="radio" id="medium-piyority" name="task-piority" value="medium">
+                            🟡 medium
+                        </label>
+                        <label for="low-piyority">
+                            <input type="radio" id="low-piyority" name="task-piority" value="low">
+                            🟢 low
+                        </label>
+                    </div>
+
+                </div>
+            </section>
+            
+            <section class="task-date-section">
+                <div class="date-selector">
+                    <div class="date">
+                        <label for="task-date">Due date</label>
+                        <input type="date" id="task-due-date">
+                    </div>
+
+                    <div class="add-reminder">
+                        <label for="add-reminder">Add reminder</label>
+                        
+                        <label for="yes">
+                            <input type="radio" name="reminder" id="yes" value="yes">
+                            yes
+                        </label>
+
+                        <label for="no">
+                            <input type="radio" name="reminder" id="no" value="no" checked>
+                            no
+                        </label>
+
+                    </div>
+                </div>
+
+                <div class="reminder-selector">
+                    <div>
+                        <label for="reminder-selector">date and time</label>
+
+                    <select name="reminder-type" id="reminder-type">
+                        <option value="daily">daily</option>
+                        <option value="weekly">weekly</option>
+                        <option value="monthly">monthly</option>
+                    </select>
+                    </div>
+
+                    <div id="reminder-calander-cont">
+                        <input type="text" id="reminder-calander" placeholder="Pick a date">
+
+                        <input type="time" name="reminder-time" id="reminder-time">
+
+                    </div>
+                    
+                </div>
+
+            </section>
+
+            <section class="task-categories">
+                <h2>categories</h2>
+                <div class="categories">
+                    <label for="business">
+                        <input type="radio" id="business" name="categories" value="business">
+                        💼 business
+                    </label>
+                    <label for="personal">
+                        <input type="radio" id="personal" name="categories" value="personal">
+                        👤 personal
+                    </label>
+                    <label for="projects">
+                        <input type="radio" id="projects" name="categories" value="projects">
+                        🗂️ projects
+                    </label>
+                    <label for="fitness">
+                        <input type="radio" id="fitness" name="categories" value="fitness">
+                        🏋 fitness
+                    </label>
+                    <label for="research">
+                        <input type="radio" id="research" name="categories" value="research">
+                        🔍 research
+                    </label>
+                    <label for="hobbies">
+                        <input type="radio" id="hobbies" name="categories" value="hobbies">
+                        🎨 hobbies
+                    </label>
+                    <label for="maintenance">
+                        <input type="radio" id="maintenance" name="categories" value="maintenance">
+                        🛠️maintenance 
+                    </label>
+
+                    <label for="other">
+                        <input type="radio" id="other" name="categories" value="other">
+                        add custom
+                    </label>
+                    
+                </div>
+                
+                <div class="custom-category">
+                    <input type="text" id="custom-category-input" placeholder="add new category">
+                    <button id="add-custom-category">Add</button>
+                </div>
+            </section>
+            
+            <section class="sub-tasks">
+                <h2>sub-tasks</h2>
+                
+                <div class="sub-tasks-list">
+                    <div class="sub-task" data-taskid="1">
+                        <p>write a song after this design</p>
+                        <button class="delete-sub-task-btn" data-taskid="1" >remove</button>
+                    </div>
+                    <div class="sub-task" data-taskid="2">
+                        <p>join the ukraine amry and fight help fight for their home</p>
+                        <button class="delete-sub-task-btn" data-taskid="2">remove</button>
+                    </div>
+                </div>
+
+                <div class="add-sub-task">
+                    <input type="text" id="sub-task-description" placeholder="Complete wireframes">
+                    <button class="add-sub-task-btn">Add</button>
+                </div>
+            
+            </section>
+
+            <section class="attachment-section">
+                <h2>Attach files</h2>
+                <p>note: not more than 5mb of size</p>
+
+                <div class="attachments">
+                    <div class="attachment" data-attachmentid="1">
+                        <div class="attachment-icon"><img src="assert/pdf.png" alt="attachment"></div>
+                        <p>document.pdf</p>
+
+                        <button class="delete-attachment-btn" data-attachmentid="1"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></button>
+                    </div>
+                    
+                    <div class="attachment" data-attachmentid="2">
+                        <div class="attachment-icon"><img src="assert/photo.png" alt="attachment"></div>
+                        <p>business card.png</p>
+
+                        <button class="delete-attachment-btn" data-attachmentid="2"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></button>
+                    </div>
+                </div>
+                
+                <div class="add-attachment-selector">
+                    <input type="file" id="attachment-file" accept=".pdf,.jpg,.png,.jpeg,.docx,.xlsx,.pptx,.txt,.zip,.rar,.7z">
+                    <button id="upload-attachment">Upload</button>
+                </div>
+
+            </section>
+
+            <div class="task-actions">
+                <button id="cancel-task-btn">Cancel</button>
+                <button id="save-task-btn">Save</button>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="src/create-new-task.js"></script>
 </body>
 </html>
