@@ -87,6 +87,12 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
 .task-date-section{
     margin-bottom: 3rem;
     max-width: 36rem;
+    height: 6rem;
+    overflow: hidden;
+    transition: height .4s ease-out;
+}
+.task-date-section.add-height{
+    height: 14rem;
 }
 .task-date-section .date-selector {
     display: flex;
@@ -129,18 +135,24 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
 
 
 .reminder-selector {
-    display: none;
+    display: flex;
     flex-flow: row wrap;
     align-content:center ;
     justify-content: space-between;
     gap: 1.1rem;
-    padding: 1rem .5rem;
+    padding: 3rem .5rem;
     max-height: 5.5rem;
     margin-bottom: 1.5rem;
     background-color: var(--secondary-color);
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .6s linear;
 }
 .reminder-selector.add-reminder {
     display: flex;
+    opacity: 1;
+    visibility: visible;
 }
 
 
@@ -175,8 +187,14 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
 .task-categories {
     padding-bottom: 1.2rem;
     max-width: 50rem;
-
+    height: 13rem;
+    transition: height .4s ease-out;
 }
+.task-categories.show {
+    height: 17rem;
+}
+
+
 .task-categories h2 {
     margin-bottom: .5rem;
     text-transform: capitalize;
@@ -200,11 +218,15 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
 }
 
 .task-categories .custom-category {
-    display: none;
+    display: flex;
     gap: 1rem;
+    transition: opacity .5s linear;
+    opacity: 0;
+    visibility: hidden;
 }
 .task-categories .custom-category.show {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
 }
 
 
@@ -219,7 +241,7 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
     border-radius: .2rem;
     color: var(--text-color);
     cursor: pointer;
-    transition: all .2s linear;
+    transition: background-color .2s linear;
 }
 .task-categories #add-custom-category:hover {
     background-color: var(--secondary-color);
@@ -425,28 +447,41 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
 
 
 
-@media (min-width: 576px) {
-    
+@media (min-width: 410px) {
+    .task-date-section{
+        height: 3rem;
+    }
+    .task-date-section.add-height{
+        height: 11rem;
+    }
+    .reminder-selector {
+        padding: 1rem .5rem;
+    }
+}
+@media (min-width: 439px) {
+    .task-categories {
+        height: 10rem;
+    }
+    .task-categories.show {
+        height: 14rem;
+    }
 }
 
 @media (min-width: 576px) {
-    /* .container{
-        background-color: red;
-    } */
-    
+    .task-date-section.add-height{
+        height: 9rem;
+    }
     .about-task .description #task-description {
         width: 43rem;
     }
     .about-task .tittle #task-title {
         max-width: 40rem;
     }
+    
 }
 
 
 @media (min-width: 768px) {
-    /* .container{
-        background-color: rgb(34, 9, 9);
-    } */
     .about-task .description #task-description {
         max-width: 30rem;
     }
@@ -458,12 +493,5 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
     }
 }
 
-@media (min-width: 992px) {
-    
-}
-  
-  
-@media (min-width: 1200px) {
-    
-}
+
 

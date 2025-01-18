@@ -1,25 +1,34 @@
 /*  page creation script*/
 const { Calendar } = window.VanillaCalendarPro;
-const addReminder = document.getElementById("yes")
-const removeReminder = document.getElementById("no")
-const reminderSelector = document.querySelector(".reminder-selector")
+const addReminderToogle = document.getElementById("yes")
+const removeReminderToogle = document.getElementById("no")
+const reminderOptionConst = document.querySelector(".reminder-selector")
 const customCategoryInput = document.querySelector(".custom-category")
-const addOtherCategory = document.querySelector("#other")
+const addOtherCategoryToogle = document.querySelector("#other")
+const taskDateSection = document.querySelector(".task-date-section") 
+const taskCategories = document.querySelector(".task-categories")
 
 
-addOtherCategory.addEventListener("click", (event) => {
+
+
+
+/* shows an input when user want to add other category */
+addOtherCategoryToogle.addEventListener("click", (event) => {
   if(event.target.checked) {
     customCategoryInput.classList.toggle("show")
+    taskCategories.classList.toggle("show")
   }
 })
 
 
-
-addReminder.addEventListener("click", () => {
-  reminderSelector.classList.add("add-reminder")
+/* shows a reminder option when user want to add reminder */
+addReminderToogle.addEventListener("click", () => {
+  reminderOptionConst.classList.add("add-reminder")
+  taskDateSection.classList.add("add-height")
 })
-removeReminder.addEventListener("click", () => {
-  reminderSelector.classList.remove("add-reminder")
+removeReminderToogle.addEventListener("click", () => {
+  reminderOptionConst.classList.remove("add-reminder");
+  taskDateSection.classList.remove("add-height")
 })
 
 
