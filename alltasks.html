@@ -13,6 +13,26 @@
     <link rel="stylesheet" href="css/alltasks.css">
 </head>
 <body >
+    <script>
+        let theme = localStorage.getItem("demy-tasks-theme");
+        const body = document.querySelector("body");
+
+
+        if (theme === "dark") {
+            body.classList.add("dark-theme");
+        } else if (theme === "light") {
+            body.classList.remove("dark-theme");
+        } else {
+            if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                body.classList.add("dark-theme");
+        
+            } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+                body.classList.remove("dark-theme");
+        
+            }
+            
+        }
+    </script>
     <div class="container">
         <header>
             <div class="logo"><a href="index.html">Dashboard</a></div>

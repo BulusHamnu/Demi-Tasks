@@ -15,7 +15,27 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/index.css">
 </head>
-<body >
+<body >\
+    <script>
+        let theme = localStorage.getItem("demy-tasks-theme");
+        const body = document.querySelector("body");
+
+
+        if (theme === "dark") {
+            body.classList.add("dark-theme");
+        } else if (theme === "light") {
+            body.classList.remove("dark-theme");
+        } else {
+            if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                body.classList.add("dark-theme");
+        
+            } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+                body.classList.remove("dark-theme");
+        
+            }
+            
+        }
+    </script>
     <div class="container">
         <header>
             <a class="logo" href="/index.html">Demi-Tasks</a>
