@@ -1,6 +1,7 @@
 /*  page creation script*/
 
 /* Declaring input variable */
+import {getFileCoverType} from "./utils/functions.js";
 let taskName;
 let aboutTask;
 let taskPriority;
@@ -12,9 +13,6 @@ let reminderTime ;
 let enabled = false;
 let subTasks = [];
 let attachments = [];
-
-
-
 
 /* Getting all input */
 const addReminderToogle = document.getElementById("yes")
@@ -59,6 +57,17 @@ categories.addEventListener("click",(event) => {
   if(event.target.value === "other") {
     customCategoryBtn.addEventListener("click",() => {
       taskCategory = customCategoryInputbox.value
+      
+
+      let newCategory = document.createElement("label");
+      newCategory.setAttribute("for","business");
+      newCategory.innerHTML =  `
+        <input type="radio" id=${taskCategory} name="categories" value=${taskCategory} class="category-selector" checked>
+         ⚙️ ${taskCategory}
+      `;
+
+      categories.append(newCategory)
+
       customCategoryInputbox.value = '';
       console.log(taskCategory)
 
@@ -70,6 +79,7 @@ categories.addEventListener("click",(event) => {
 
 })
 
+
 reminderSelector.addEventListener("change",() => {
   reminderType = reminderSelector.value;
   
@@ -79,7 +89,7 @@ reminderCalander.addEventListener("change", () => {
   reminderDay = reminderCalander.value
 } );
 
-reminderTimeSelector.addEventListener("click",() => {
+reminderTimeSelector.addEventListener("change",() => {
   reminderTime = reminderTimeSelector.value;
 });
 
@@ -91,20 +101,46 @@ addSubtaskBtn.addEventListener('click', () => {
     done : false
   }
 
+  let newSubtask = document.createElement("div");
+  newSubtask.classList.add("sub-task");
+  newSubtask.setAttribute("data-taskid", subTasks.length);
+  newSubtask.innerHTML =  `
+    <p>${subTaskDescription.value}</p>
+    <button class="delete-sub-task-btn" id=task-${subTasks.length} data-taskid=${subTasks.length} >remove</button>
+  `;
+
   subTasks.push(subtask)
+  
+  document.querySelector(".sub-tasks-list").append(newSubtask)
   subTaskDescription.value = '';
+
+  /* ADD event listener to the new delete  */
+  document.getElementById(`task-${(subTasks.length) - 1}`).addEventListener("click", deleteTask);
+
 
 })
 
 
-fileAttachment.addEventListener('change', (event) => {
-  let file = event.target.files[0];
-  attachments.push(file)
-
-});
-
 uploadFileBtn.addEventListener('click', () => {
-  console.log("Upload")
+  let file = fileAttachment.files[0];
+
+  let newAttachment = document.createElement("div");
+  newAttachment.classList.add("attachment");
+  newAttachment.setAttribute("data-attachmentid",`${attachments.length}`);
+
+  newAttachment.innerHTML = `
+      <div class="attachment-icon"><img src="${getFileCoverType(file.type)}" alt="attachment"></div> 
+      <p>${file.name}</p>
+
+      <button class="delete-attachment-btn" id="file-${attachments.length}" data-attachmentid=${attachments.length}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></button>
+
+  `;
+
+  attachments.push(file)
+  document.querySelector(".attachments").append(newAttachment);
+  document.getElementById(`file-${attachments.length - 1}`).addEventListener("click", deleteFile);
+  fileAttachment.value = '';
+
 })
 
 saveNewTaskBtn.addEventListener('click', () => {
@@ -167,6 +203,62 @@ console.log(newTask)
 
 }
 
+/* Event listener for deleting subtack when added */
+function deleteTask(event) {
+  subTasks.splice(event.target.dataset.taskid, 1)
+
+  document.querySelector(".sub-tasks-list").innerHTML = "";
+
+  subTasks.forEach((task,index) => {
+
+    let newSubtask = document.createElement("div");
+    newSubtask.classList.add("sub-task");
+    newSubtask.setAttribute("data-taskid", index);
+    newSubtask.innerHTML =  `g
+    <p>${task.title}</p>
+    <button class="delete-sub-task-btn" id=task-${index} data-taskid=${index} >remove</ button>
+    `
+
+      document.querySelector(".sub-tasks-list").append(newSubtask)
+
+      document.getElementById(`task-${index}`).removeEventListener("click", deleteTask);
+      document.getElementById(`task-${index}`).addEventListener("click", deleteTask);
+
+    ; });
+}
+
+
+/* Event listener for deleting file when added */
+function deleteFile(event) {
+  document.querySelector(".attachments").querySelectorAll(".attachment").forEach((file) => {
+
+    if(file.dataset.attachmentid === event.currentTarget.dataset.attachmentid) {
+      attachments.splice(event.currentTarget.dataset.attachmentid, 1);
+
+      document.querySelector(".attachments").innerHTML = "";
+      attachments.forEach( (attachment,index) => {
+        let newAttachment = document.createElement("div");
+        newAttachment.classList.add("attachment");
+        newAttachment.setAttribute("data-attachmentid",`${index}`);
+      
+        newAttachment.innerHTML = `
+            <div class="attachment-icon"><img src="${getFileCoverType(attachment.type)}" alt="attachment"></div> 
+            <p>${attachment.name}</p>
+      
+            <button class="delete-attachment-btn" id="file-${index}" data-attachmentid=${index}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></button>
+      
+        `;
+
+        document.querySelector(".attachments").append(newAttachment);
+        document.getElementById(`file-${index}`).removeEventListener("click", deleteFile);
+        document.getElementById(`file-${index}`).addEventListener("click", deleteFile);
+
+      })
+      
+    }
+  });
+  
+}
 
 
 
