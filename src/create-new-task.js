@@ -2,6 +2,7 @@
 
 /* Declaring input variable */
 import {getFileCoverType} from "./utils/functions.js";
+import { taskMangerDb } from "../db/data-module.js";
 let taskName;
 let aboutTask;
 let taskPriority;
@@ -13,6 +14,8 @@ let reminderTime ;
 let enabled = false;
 let subTasks = [];
 let attachments = [];
+const db = new taskMangerDb();
+
 
 /* Getting all input */
 const addReminderToogle = document.getElementById("yes")
@@ -136,7 +139,16 @@ uploadFileBtn.addEventListener('click', () => {
 
   `;
 
-  attachments.push(file)
+  const blob = new Blob([file], { type: file.type });
+  let newBlob = {
+    name: file.name,
+    type: file.type,
+    lastModified: Date.now(),
+    fileData: blob
+  }
+
+  attachments.push(newBlob)
+
   document.querySelector(".attachments").append(newAttachment);
   document.getElementById(`file-${attachments.length - 1}`).addEventListener("click", deleteFile);
   fileAttachment.value = '';
@@ -178,7 +190,6 @@ removeReminderToogle.addEventListener("click", () => {
 
 
 
-
 /* getting data from the page */
 
 function getTaskData () {
@@ -189,9 +200,9 @@ let newTask = {
   dueDate : taskDueDate  ,
   priority : taskPriority  ,
   status : "in-completed",
-  category : taskCategory  ,
-  reminder : {
-      enabled : enabled,
+  category : taskCategory ,
+  reminder : enabled,
+  reminderDetails : {
       type : ` ${reminderType? reminderType: "daily"}` ,
       date : reminderDay ,
       time : reminderTime
@@ -199,7 +210,8 @@ let newTask = {
   subTasks : subTasks,
   attachment : attachments
 }
-console.log(newTask)
+
+  db.addTask(newTask);
 
 }
 
@@ -259,6 +271,13 @@ function deleteFile(event) {
   });
   
 }
+
+
+
+
+
+
+
 
 
 

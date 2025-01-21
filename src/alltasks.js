@@ -1,9 +1,11 @@
+import { taskMangerDb } from "../db/data-module.js";
 let search = document.querySelector(".search")
 let searchItem = document.querySelector(".search-item");
 const searchButtonSearch = document.querySelector(".search-button-search")
 const searchButtonBancel = document.querySelector(".search-button-cancel");
 const searchButton = document.querySelector(".search-button");
 const header = document.querySelector("header");
+const db =  new taskMangerDb()
 
 
 searchButton.addEventListener("click", () => {
@@ -12,5 +14,6 @@ searchButton.addEventListener("click", () => {
     search.classList.toggle("show")
 })
 
+db.getAllTasks().then(tasks => tasks.forEach(task => console.log(task)));
 
 
