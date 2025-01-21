@@ -193,7 +193,46 @@ removeReminderToogle.addEventListener("click", () => {
 /* getting data from the page */
 
 function getTaskData () {
-  
+
+  /* checking for empty field */
+if(!taskName){
+  taskTitle.classList.add("error");
+  alert("Please add a task name");
+  return
+} else {
+  taskTitle.classList.remove("error");
+}
+if(!aboutTask) {
+  taskDescription.classList.add("error");
+  alert("Please add a description");
+  return
+}else {
+  taskDescription.classList.remove("error");
+}
+if(!taskPriority) {
+  taskPiyorities.classList.add("error");
+  alert("Please add a task priority");
+  return
+} else {
+  taskPiyorities.classList.remove("error");
+}
+if(!taskDueDate){
+  dueDateSelector.classList.add("error");
+  alert("Please add a task due date");
+  return
+} else {
+  dueDateSelector.classList.remove("error");
+}
+if(!taskCategory) {
+  categories.classList.add("error");
+  alert("Please select a task category");
+  return
+} else {
+  categories.classList.remove("error");
+}
+
+
+
 let newTask = {
   title : taskName,
   description : aboutTask  ,
@@ -212,6 +251,8 @@ let newTask = {
 }
 
   db.addTask(newTask);
+  document.querySelectorAll("input").forEach((input) => {input.value = ""});
+  window.location.href = "./allTasks.html"
 
 }
 
