@@ -1,8 +1,8 @@
 /*  page creation script*/
 
 /* Declaring input variable */
-import {getFileCoverType} from "./utils/functions.js";
 import { taskMangerDb } from "../db/data-module.js";
+import {getFileCoverType} from "./utils/functions.js";
 let taskName;
 let aboutTask;
 let taskPriority;
@@ -15,7 +15,6 @@ let enabled = false;
 let subTasks = [];
 let attachments = [];
 const db = new taskMangerDb();
-
 
 /* Getting all input */
 const addReminderToogle = document.getElementById("yes")
@@ -59,20 +58,19 @@ categories.addEventListener("click",(event) => {
 
   if(event.target.value === "other") {
     customCategoryBtn.addEventListener("click",() => {
-      taskCategory = customCategoryInputbox.value
+      taskCategory = "⚙️ " + customCategoryInputbox.value
       
 
       let newCategory = document.createElement("label");
       newCategory.setAttribute("for","business");
       newCategory.innerHTML =  `
         <input type="radio" id=${taskCategory} name="categories" value=${taskCategory} class="category-selector" checked>
-         ⚙️ ${taskCategory}
+        ${taskCategory}
       `;
 
       categories.append(newCategory)
 
       customCategoryInputbox.value = '';
-      console.log(taskCategory)
 
       event.target.checked = false;
       taskCategories.classList.remove("show")
