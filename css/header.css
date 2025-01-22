@@ -31,7 +31,15 @@
     /* Priority and Category Colors */
     --high-priority-color: rgba(194, 11, 11, 1);
     --medium-priority-color: rgba(185, 125, 36, 1);
+    --low-priority-color: rgba(70, 138, 161, 0.7);
+
     --business-category-color: rgba(30, 58, 138, 1);
+    --hobbies-category-color: rgba(236, 72, 153, 1);
+    --research-category-color: rgba(37, 99, 235, 1);
+    --fitness-category-color: rgba(34, 197, 94, 1);
+    --education-category-color: rgba(139, 92, 246, 1);
+    --maintenance-category-color: rgba(156, 163, 175, 1);
+    --personal-category-color: rgba(234, 88, 12, 1);
 
 }
 
@@ -72,7 +80,15 @@ body.dark-theme {
     /* Priority and Category Colors */
     --high-priority-color: rgba(255, 71, 71, 1); 
     --medium-priority-color: rgba(232, 150, 69, 1); 
-    --business-category-color: rgba(59, 130, 246, 1); 
+    --low-priority-color: rgba(173, 216, 230, 0.7); 
+    --business-category-color: rgba(59, 130, 246, 1);
+    --fitness-category-color-dark: rgba(20, 150, 75, 1);
+    --personal-category-color-dark: rgba(184, 68, 10, 1);
+    --projects-category-color-dark: rgba(180, 30, 30, 1);
+    --education-category-color-dark: rgba(110, 80, 200, 1);
+    --maintenance-category-color-dark: rgba(110, 115, 125, 1);
+    --hobbies-category-color-dark: rgba(200, 50, 120, 1);
+    --research-category-color-dark: rgba(25, 80, 200, 1);
 }
 
 .container {

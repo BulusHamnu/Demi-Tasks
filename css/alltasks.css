@@ -164,6 +164,7 @@ header.show-search {
     padding: .1rem 0rem ;
 }
 
+
 /* tab-grid */
 .tab-grid {
     display: grid;
@@ -277,19 +278,46 @@ header.show-search {
 .task-card  .categories-label a[data-type="high"] {
     background-color: var(--high-priority-color);
 }
+.task-card  .categories-label a[data-type="low"] {
+    background-color: var(--low-priority-color);
+}
 .task-card  .categories-label a[data-type="business"] {
     background-color: var(--business-category-color);
 }
-.task-card  .categories-label a[data-type="completed"] {
-    background-color: var(--completed-dark);
+.task-card  .categories-label a[data-type="hobbies"] {
+    background-color: var(--hobbies-category-color);
 }
+.task-card  .categories-label a[data-type="research"] {
+    background-color: var(--research-category-color);
+}
+.task-card  .categories-label a[data-type="fitness"] {
+    background-color: var(--fitness-category-color);
+}
+.task-card  .categories-label a[data-type="eduction"] {
+    background-color: var(--education-category-color);
+}
+.task-card  .categories-label a[data-type="maintenance"] {
+    background-color: var(--maintenance-category-color);
+}
+.task-card  .categories-label a[data-type="personal"] {
+    background-color: var(--personal-category-color);
+}
+
+
 
 .task-card  .categories-label a[data-type="medium"] {
     background-color: var(--medium-priority-color);
 }
+.task-card  .categories-label a[data-type="completed"] {
+    background-color: var(--completed-dark);
+}
 .task-card  .categories-label a[data-type="in-progress"] {
     background-color: var(--in-progress-dark);
 }
+.task-card  .categories-label a[data-type="in-completed"] {
+    background-color: var(--incomplete-color);
+}
+
 
 
 
