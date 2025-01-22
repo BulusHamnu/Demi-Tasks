@@ -10,12 +10,13 @@ export class taskMangerDb {
 
     /* Opening and configuring the db */
     openDb() {
-        if(this.db) {
-            return this.db;
-        }
+        
 
         return new Promise((resolve, reject) => {
-            
+            if(this.db) {
+                resolve(this.db);
+                return
+            }
 
             const request = window.indexedDB.open("TaskManager", 1);
 
@@ -27,7 +28,7 @@ export class taskMangerDb {
             request.onsuccess = (event) => {
                 this.db = event.target.result;
                 resolve(this.db);
-                console.log("index db opened successfully ", this.db);
+                // console.log("index db opened successfully ", this.db);
             };
 
             request.onupgradeneeded = (event) => {
@@ -57,7 +58,7 @@ export class taskMangerDb {
     }
 
     /* querying all tasksfrom table */
-    getAllTasks() {
+    getAllTasks(sort) {
         return new Promise((resolve, reject) => {
             this.openDb().then((db) => {
                 let allTask;
@@ -65,7 +66,11 @@ export class taskMangerDb {
     
                 taskStore.getAll().onsuccess = (event) => {
                 allTask = event.target.result ;
-                resolve(allTask);
+                if(sort === "all") {
+                    resolve(allTask);
+                } else {
+                    resolve(allTask.filter(task => task.category === sort));
+                }
             }
             })
         });
@@ -100,26 +105,32 @@ export class taskMangerDb {
     }
 
     /* getting all task by status */
-    getByIndex(method,object) {
-        this.transaction = this.db.transaction("tasks");
-        const taskStore = this.transaction.objectStore("tasks");
+    getByIndex(method,object,sort) {
+        return new Promise((resolve, reject) => {
+            this.transaction = this.db.transaction("tasks");
+            const taskStore = this.transaction.objectStore("tasks");
 
-        let request;
-        if(method === "status") {
-            request = taskStore.index("status").getAll(object);
+            let request;
+            if(method === "status") {
+                request = taskStore.index("status").getAll(object);
 
-        } else if(method === "category") {
-            request = taskStore.index("status").getAll(object);
+            } else if(method === "category") {
+                request = taskStore.index("status").getAll(object);
 
-        } else if (method === "priority") {
-            request = taskStore.index("priority").getAll(object);
-        }
+            } else if (method === "priority") {
+                request = taskStore.index("priority").getAll(object);
+            }
 
-        request.onsuccess = (event) => {
-            let allTask = event.target.result
-            return allTask;
-            
-        };
+            request.onsuccess = (event) => {
+                let allTask = event.target.result
+                if(sort == "all") {
+                    resolve(allTask);
+                } else {
+                    resolve(allTask.filter(task => task.category === sort));
+                }
+                
+            };
+        });
     }
 
     /* deleting a task by id */
