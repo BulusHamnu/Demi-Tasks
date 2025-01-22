@@ -77,6 +77,21 @@ export class taskMangerDb {
 
     }
 
+    /* search for a task */
+    searchTask(search,filter) {
+        return new Promise((resolve, reject) => {
+            const taskStore = this.db.transaction("tasks").objectStore("tasks");
+            let request = taskStore.getAll();
+
+            request.onsuccess = (event) => {
+                let result = event.target.result;
+                let results2 = result.filter(task => task[filter].toLowerCase().includes(search.toLowerCase()))
+
+                resolve(results2);
+            }
+        })
+    }
+
     /* getting a task by id */
     getTask(taskId) {
         

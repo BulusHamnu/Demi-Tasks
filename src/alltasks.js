@@ -2,6 +2,7 @@ import { taskMangerDb } from "../db/data-module.js";
 import {changeDateFormat} from "../src/utils/functions.js";
 let search = document.querySelector(".search");
 let searchItem = document.querySelector(".search-item");
+const searchBox = document.querySelector(".search-box")
 const taskGrid = document.querySelector(".tab-grid");
 const searchButtonSearch = document.querySelector(".search-button-search")
 const searchButtonBancel = document.querySelector(".search-button-cancel");
@@ -10,6 +11,26 @@ const header = document.querySelector("header");
 const statusTabs = document.querySelectorAll(".category-tab")
 const db =  new taskMangerDb()
 
+
+
+
+/* Searching function */
+function searchTask() {
+    let searchFilter = document.querySelector("#search-filter").value;
+    if (!searchFilter) {
+        searchFilter = "title";
+    }
+
+    db.searchTask(searchBox.value,searchFilter).then((results) => {
+        if(results.length > 0) {
+            renderTasks(results)
+        } else {
+            taskGrid.style.display = "block";
+            taskGrid.innerHTML = "<h2 class='no-task'>No tasks found for this " + searchBox.value + ".</h2>";
+        }
+    });
+
+}
 
 
 /* New task divBtn variable */
@@ -31,6 +52,16 @@ searchButton.addEventListener("click", () => {
     header.classList.toggle("show-search")
     search.classList.toggle("show")
 })
+
+/* Search button and searchbox event listener */
+searchItem.addEventListener("click", searchTask)
+
+searchBox.addEventListener("keydown", (event) => {
+    if(event.key === "Enter") {
+        searchTask();
+    }
+})
+
 
 /* categories tab button event listener */
 statusTabs.forEach((button) => button.addEventListener("click", (event) => {
