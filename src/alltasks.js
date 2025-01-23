@@ -147,7 +147,7 @@ function renderTasks(tasks) {
             </div>
 
         `
-        newTask.addEventListener('click', () => window.location.href="task.html")
+        newTask.addEventListener('click', () => window.location.href=`task.html?taskid=${task.id}`)
 
         taskGrid.appendChild(newTask)
 

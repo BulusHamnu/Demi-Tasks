@@ -190,6 +190,40 @@ export class taskMangerDb {
             taskStore.put(task);
         };
     }
+
+    deleteSubTask(taskId,subTaskId) {
+        return new Promise((resolve, reject) => {
+            this.transaction = this.db.transaction("tasks", "readwrite");
+            const taskStore = this.transaction.objectStore("tasks");
+            let request = taskStore.get(taskId);
+
+            request.onsuccess = (event)=> {
+                const task = event.target.result;
+                task.subTasks.splice(subTaskId,1)
+
+                console.log(task);
+                taskStore.put(task);
+                resolve(task);
+
+            }
+        })
+    }
+
+    addSubTask(taskId,subTaskName) {
+        return new Promise((resolve, reject) => {
+            this.transaction = this.db.transaction("tasks", "readwrite");
+            const taskStore = this.transaction.objectStore("tasks");
+            let request = taskStore.get(taskId);
+
+            request.onsuccess = (event)=> {
+                const task = event.target.result;
+                task.subTasks.push({title: subTaskName, done: false})
+                taskStore.put(task);
+                resolve(task);
+            }
+    
+    });
+}
 }
 
 

@@ -21,7 +21,7 @@
     --in-progress-dark: rgba(149, 123, 17, 1);
     --completed-color: rgba(34, 255, 0, 1);
     --completed-dark: rgba(40, 126, 27, 1);
-    --incomplete-color: rgba(197, 163, 163, 1);
+    --incomplete-color: rgb(164, 123, 123);
     --overdue-color: rgba(255, 0, 0, 1);
 
     /* Text and Danger Colors */
@@ -40,6 +40,8 @@
     --education-category-color: rgba(139, 92, 246, 1);
     --maintenance-category-color: rgba(156, 163, 175, 1);
     --personal-category-color: rgba(234, 88, 12, 1);
+    --custom-category-color : rgb(128, 99, 99);
+    --projects-category-color-dark: rgba(180, 30, 30, 1);
 
 }
 
@@ -89,6 +91,7 @@ body.dark-theme {
     --maintenance-category-color-dark: rgba(110, 115, 125, 1);
     --hobbies-category-color-dark: rgba(200, 50, 120, 1);
     --research-category-color-dark: rgba(25, 80, 200, 1);
+    --custom-category-color : rgb(153, 122, 122);
 }
 
 .container {

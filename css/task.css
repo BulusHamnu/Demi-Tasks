@@ -76,9 +76,41 @@
 }
 
 /* Category color manipulation */
-.task-details .task-categorie-type[data-category-type="business"] {
+.task-details .task-categorie-type[data-category-type] {
+    background-color: var(--custom-category-color);
+}
+.task-details .task-categorie-type[data-category-type="💼 business"] {
     background-color: var(--business-category-color);
 }
+.task-details .task-categorie-type[data-category-type="🎨 hobbies"] {
+    background-color: var(--hobbies-category-color);
+}
+.task-details .task-categorie-type[data-category-typee="🔍 research"] {
+    background-color: var(--research-category-color);
+}
+.task-details .task-categorie-type[data-category-type="🏋 fitness"] {
+    background-color: var(--fitness-category-color);
+}
+
+.task-details .task-categorie-type[data-category-type="🎓 eduction"] {
+    background-color: var(--education-category-color);
+}
+.task-details .task-categorie-type[data-category-type="🛠️maintenance"] {
+    background-color: var(--maintenance-category-color);
+}
+.task-details .task-categorie-type[data-category-type="👤 personal"] {
+    background-color: var(--personal-category-color);
+}
+.task-details .task-categorie-type[data-category-type="🗂️ projects"] {
+    background-color: var(--projects-category-color-dark);
+}
+
+
+
+
+
+
+
 
 
 
@@ -96,15 +128,15 @@
     color: white;
 }
 
-.task-details .task-priority .task-priority-code[data-priority-type="high"] {
+.task-details .task-priority .task-priority-code[data-priority-type="🔥high"] {
     background-color: var(--high-priority-color);
     
 }
-.task-details .task-priority .task-priority-code[data-priority-type="medium"] {
+.task-details .task-priority .task-priority-code[data-priority-type="🟡 medium"] {
     background-color: var(--medium-priority-color);
     
 }
-.task-details .task-priority .task-priority-code[data-priority-type="low"] {
+.task-details .task-priority .task-priority-code[data-priority-type="🟢 low"] {
     background-color: var(--business-category-color);
     
 }
@@ -155,7 +187,7 @@
 
 /* sub-tasks */
 .sub-tasks {
-    margin-bottom: 1.5rem;
+    margin-bottom: .5rem;
     display: flex;
     flex-flow: column nowrap;
 }
@@ -193,6 +225,44 @@
     fill: red;
     height:  22px;
     width: 22px;
+}
+
+.input-new-task {
+    width: 16rem;
+    position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, 50%);
+    margin-bottom: 1.5rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    flex-flow: column nowrap;
+    padding: 2rem .3rem ;
+    background-color: var(--secondary-color-2);
+    border: 2px solid var(--text-color);
+    z-index: 3;
+}
+.input-new-task.show {
+    display: flex;
+}
+.input-new-task #new-subtask-input {
+    width: 95%;
+    height: 2rem;
+}
+.input-new-task button {
+    padding: .6rem 2.5rem;
+    border-radius: .2rem;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    transition: background-color .3s linear;
+    cursor: pointer;
+}
+.input-new-task button:hover {
+    background-color: var(--secondary-color-2);
+    border: 1px solid var(--text-color);
 }
 
 .add-sub-task{
@@ -260,9 +330,16 @@
 
 
 /* Media query */
+@media (min-width: 360px) {
+    .input-new-task {
+        width: 20rem;
+    }
+}
 
 @media (min-width: 576px) {
-    
+    .input-new-task {
+        width: 25rem;
+    }
 }
   
 
@@ -281,9 +358,13 @@
         height: 20px;
     }
     
+    .input-new-task {
+        width: 27rem;
+    }
     
 }
   
+
 
 
 

@@ -282,6 +282,9 @@ header.show-search {
 
 
 /* color manipulation */
+.task-card  .categories-label a[data-type] {
+    background-color: var(--custom-category-color);
+}
 .task-card  .categories-label a[data-type="🔥high"] {
     background-color: var(--high-priority-color);
 }
@@ -310,7 +313,7 @@ header.show-search {
     background-color: var(--personal-category-color);
 }
 .task-card  .categories-label a[data-type="🗂️ projects"] {
-    background-color: var(--personal-category-color);
+    background-color: var(--projects-category-color-dark);
 }
 
 
