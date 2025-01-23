@@ -236,7 +236,7 @@ let newTask = {
   description : aboutTask  ,
   dueDate : taskDueDate  ,
   priority : taskPriority  ,
-  status : "in-completed",
+  status : "🔲 in-completed",
   category : taskCategory ,
   reminder : enabled,
   reminderDetails : {
@@ -248,10 +248,19 @@ let newTask = {
   attachment : attachments
 }
 
-  db.addTask(newTask);
-  document.querySelectorAll("input").forEach((input) => {input.value = ""});
-  window.location.href = "./allTasks.html"
+  db.addTask(newTask)
+    .then( message => {
+      if(message === 'saved') {
+        document.querySelectorAll("input").forEach((input) => {input.value = ""});
+        document.querySelectorAll("textarea").forEach((textarea) => {textarea.value = ""});
 
+        alert("Added task");
+        window.location.href = "./allTasks.html";
+      } else {
+        alert("Failed to add task try saving again");
+      }
+    })
+  
 }
 
 /* Event listener for deleting subtack when added */
@@ -265,7 +274,7 @@ function deleteTask(event) {
     let newSubtask = document.createElement("div");
     newSubtask.classList.add("sub-task");
     newSubtask.setAttribute("data-taskid", index);
-    newSubtask.innerHTML =  `g
+    newSubtask.innerHTML =  `
     <p>${task.title}</p>
     <button class="delete-sub-task-btn" id=task-${index} data-taskid=${index} >remove</ button>
     `

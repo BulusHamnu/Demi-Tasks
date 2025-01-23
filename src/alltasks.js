@@ -33,18 +33,6 @@ function searchTask() {
 }
 
 
-/* New task divBtn variable */
-let addTaskDiv = document.createElement("div");
-addTaskDiv.classList.add("task-card");
-addTaskDiv.classList.add("add-new-task");
-addTaskDiv.innerHTML = `
-    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
-    <h3 class="task-headiing">Add new task</h3>
-`;
-addTaskDiv.addEventListener("click", () => window.location.href=`create-new-task.html`)
-
-
-
 
 /* searchBtn toogle */
 searchButton.addEventListener("click", () => {
@@ -97,7 +85,7 @@ function getAllTasks() {
             renderTasks(tasks);
         } else {
             taskGrid.style.display = "block";
-            taskGrid.innerHTML = "<h2 class='no-task'>No tasks!</h2>";
+            taskGrid.innerHTML = "<h2 class='no-task'>You have no task available please create new one!</h2>";
         }
     });
 }
@@ -164,7 +152,6 @@ function renderTasks(tasks) {
         taskGrid.appendChild(newTask)
 
     })
-    taskGrid.appendChild(addTaskDiv)
 }
 
 

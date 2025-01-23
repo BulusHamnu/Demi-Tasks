@@ -65,7 +65,6 @@
     padding: .25rem .5rem;
     margin-left: auto;
     border: 1px solid var(--secondary-color);
-    /* background-color: var(--primary-color); */
 }
 
 
@@ -144,24 +143,43 @@ header.show-search {
 
 /* sorting-tab */
 .sorting-tab {
-    background-color: var(--secondary-color-2);
+    background-color: var(--secondary-color);
     padding:  .3rem .5rem;
     border-radius: .3rem;
     display: flex;
     gap: .5rem;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: background-color 0.3s linear;
     width: max-content;
     margin-left: auto;
     margin-bottom: 1.5rem;
 }
-.sorting-tab:hover {
-    background-color: var(--secondary-color);
-}
+
 .sorting-tab #sort-category {
     padding: .1rem 0rem ;
+    cursor: pointer;
+}
+.sorting-tab .add-new-btn{
+    display: flex;
+    gap:.1rem;
+    align-items: center;
+    justify-content: center;
+    padding: .25rem .2rem ;
+    margin-left: .5rem;
+    border-radius: .2rem;
+    border: 1px solid var(--text-color);
+    background-color: var(--secondary-color-2);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color .2s linear;
+}
+.sorting-tab .add-new-btn:hover{
+    background-color: var(--secondary-color);
+}
+.sorting-tab .add-new-btn svg{
+    fill: var(--text-color);
+    width: 17px;
+    height: 17px;
 }
 
 
@@ -171,6 +189,7 @@ header.show-search {
     grid-template-columns: repeat(auto-fit, minmax(18rem,24rem));
     grid-auto-rows: 22rem;
     gap: 1rem;
+    margin-top: .3rem;
 }
 
 /* task-card */
@@ -180,18 +199,6 @@ header.show-search {
     grid-template-columns: 1fr;
     align-items: flex-start;
     gap: .5rem;
-    background-color: var(--secondary-color);
-    padding: .7rem;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    cursor: pointer;
-    transition: box-shadow 0.3s linear;
-}
-.task-card.add-new-task {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     background-color: var(--secondary-color);
     padding: .7rem;
     border-radius: 5px;
@@ -275,73 +282,55 @@ header.show-search {
 
 
 /* color manipulation */
-.task-card  .categories-label a[data-type="high"] {
+.task-card  .categories-label a[data-type="🔥high"] {
     background-color: var(--high-priority-color);
 }
-.task-card  .categories-label a[data-type="low"] {
+.task-card  .categories-label a[data-type="🟢 low"] {
     background-color: var(--low-priority-color);
 }
-.task-card  .categories-label a[data-type="business"] {
+.task-card  .categories-label a[data-type="💼 business"] {
     background-color: var(--business-category-color);
 }
-.task-card  .categories-label a[data-type="hobbies"] {
+.task-card  .categories-label a[data-type="🎨 hobbies"] {
     background-color: var(--hobbies-category-color);
 }
-.task-card  .categories-label a[data-type="research"] {
+.task-card  .categories-label a[data-type="🔍 research"] {
     background-color: var(--research-category-color);
 }
-.task-card  .categories-label a[data-type="fitness"] {
+.task-card  .categories-label a[data-type="🏋 fitness"] {
     background-color: var(--fitness-category-color);
 }
-.task-card  .categories-label a[data-type="eduction"] {
+.task-card  .categories-label a[data-type="🎓 eduction"] {
     background-color: var(--education-category-color);
 }
-.task-card  .categories-label a[data-type="maintenance"] {
+.task-card  .categories-label a[data-type="🛠️maintenance"] {
     background-color: var(--maintenance-category-color);
 }
-.task-card  .categories-label a[data-type="personal"] {
+.task-card  .categories-label a[data-type="👤 personal"] {
+    background-color: var(--personal-category-color);
+}
+.task-card  .categories-label a[data-type="🗂️ projects"] {
     background-color: var(--personal-category-color);
 }
 
 
 
-.task-card  .categories-label a[data-type="medium"] {
+.task-card  .categories-label a[data-type="🟡 medium"] {
     background-color: var(--medium-priority-color);
 }
-.task-card  .categories-label a[data-type="completed"] {
+.task-card  .categories-label a[data-type="✅ completed"] {
     background-color: var(--completed-dark);
 }
-.task-card  .categories-label a[data-type="in-progress"] {
+.task-card  .categories-label a[data-type="🔄 in-progress"] {
     background-color: var(--in-progress-dark);
 }
-.task-card  .categories-label a[data-type="in-completed"] {
+.task-card  .categories-label a[data-type="🔲 in-completed"] {
+    background-color: var(--incomplete-color);
+}
+.task-card  .categories-label a[data-type="⏰ overDue"] {
     background-color: var(--incomplete-color);
 }
 
-
-
-
-
-.add-new-task {
-    position: relative;
-}
-
-.add-new-task::after {
-    content: "Add New Task";
-    padding: .6rem 1.1rem;
-    background-color: var(--secondary-color-2);
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    border-radius: .3rem;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s linear;
-}
-.add-new-task:hover::after {
-    opacity: 1;
-    visibility: visible;
-}
 
 
 

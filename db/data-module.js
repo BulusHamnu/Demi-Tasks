@@ -28,7 +28,7 @@ export class taskMangerDb {
             request.onsuccess = (event) => {
                 this.db = event.target.result;
                 resolve(this.db);
-                // console.log("index db opened successfully ", this.db);
+                console.log("index db opened successfully ", this.db);
             };
 
             request.onupgradeneeded = (event) => {
@@ -50,11 +50,19 @@ export class taskMangerDb {
 
     /* adding new task to db */
     addTask(data) {
-        this.transaction = this.db.transaction("tasks", "readwrite");
-        const taskStore = this.transaction.objectStore("tasks");
-        taskStore.add(data);
-        
-        alert("Added task")
+        return new Promise((resolve, reject) => {
+            const taskStore = this.db.transaction("tasks", "readwrite").objectStore("tasks");
+            const request = taskStore.add(data)
+            request.onsuccess = (event) => {
+                resolve("saved");
+                // console.log(event)
+            }
+
+            request.onerror = (event) => {
+                console.error("error adding task", event);
+                reject("not saved");
+            }
+        })
     }
 
     /* querying all tasksfrom table */
