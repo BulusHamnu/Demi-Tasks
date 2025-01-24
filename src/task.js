@@ -11,6 +11,7 @@ const subTaskCont = document.querySelector(".sub-tasks");
 const progressText = document.querySelector(".progress-text");
 const fileCont = document.querySelector(".file-cont");
 const addNewSubTask = document.querySelector(".add-sub-task");
+const taskProgressBar = document.querySelector(".progress-bar");
 
 
 const db = new taskMangerDb()
@@ -81,16 +82,29 @@ function renderTaskDetails(task) {
 /* rendering subtask */
 function renderSubTask(subtasks,task) {
     subTaskCont.innerHTML = "";
+    let dx = taskProgressBar.offsetWidth;
 
     //update the progress bar text
     let doneSubtask = task.subTasks.filter(d => d.done === true);
     progressText.innerHTML = `${doneSubtask.length} of ${task.subTasks.length} completed`;
 
+    //update the progress bar
+    let perBar = dx / task.subTasks.length;
+    let barFill = perBar * doneSubtask.length;
+    taskProgressBar.style.setProperty("--progressBarWidth",`${barFill}px`);
+
+
     //setting the status based on the amount of subtasks completed
-    if (doneSubtask.length === task.subTasks.length && task.status !== "✅ completed") {
-        db.updateTaskEntry("status","✅ completed",task.id);
-    } else if (doneSubtask.length > 0 && task.status !== "🔄 in-progress") {
-        db.updateTaskEntry("status","🔄 in-progress",task.id);
+    if (doneSubtask.length === task.subTasks.length) {
+        if(task.status !== "✅ completed") {
+            db.updateTaskEntry("status","✅ completed",task.id);
+        }
+        
+    } else if (doneSubtask.length > 0 ) {
+        if(task.status !== "🔄 in-progress") {
+            db.updateTaskEntry("status","🔄 in-progress",task.id);
+        }
+
     } else {
         db.updateTaskEntry("status","🔲 in-completed",task.id)
     }
