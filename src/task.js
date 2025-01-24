@@ -35,7 +35,7 @@ if(taskId) {
 } else {
     console.log("No task found");
     document.querySelector("main").innerHTML = "<h1>No task found</h1>";
-    // window.location.href = "/index.html";
+    window.location.href = "alltasks.html";
 }
 
 
@@ -53,9 +53,6 @@ function renderTaskDetails(task) {
     taskPriority.setAttribute("data-priority-type", task.priority)
     taskPriority.innerHTML = task.priority;
 
-    let doneSubtask = task.subTasks.filter(task => task.done === true);
-    
-    progressText.innerHTML = `${doneSubtask.length} of ${task.subTasks.length} completed`
     renderSubTask(task.subTasks,task)
 
     if (task.attachment && task.attachment.length > 0) {
@@ -85,6 +82,19 @@ function renderTaskDetails(task) {
 function renderSubTask(subtasks,task) {
     subTaskCont.innerHTML = "";
 
+    //update the progress bar text
+    let doneSubtask = task.subTasks.filter(d => d.done === true);
+    progressText.innerHTML = `${doneSubtask.length} of ${task.subTasks.length} completed`;
+
+    //setting the status based on the amount of subtasks completed
+    if (doneSubtask.length === task.subTasks.length && task.status !== "✅ completed") {
+        db.updateTaskEntry("status","✅ completed",task.id);
+    } else if (doneSubtask.length > 0 && task.status !== "🔄 in-progress") {
+        db.updateTaskEntry("status","🔄 in-progress",task.id);
+    } else {
+        db.updateTaskEntry("status","🔲 in-completed",task.id)
+    }
+
     if (subtasks && subtasks.length > 0) {
         subtasks.forEach((subtask,index) => {
             const subTaskDiv = document.createElement("div");
@@ -110,7 +120,7 @@ function renderSubTask(subtasks,task) {
         });
 
     } else {
-        document.querySelector(".sub-task-section").innerHTML = `
+        document.querySelector(".sub-tasks").innerHTML = `
             <p>No Subtasks Found</p>
         `
     }
@@ -123,9 +133,13 @@ function subTaskDone(event) {
     let subTaskId = parseInt(event.target.dataset.subtaskid);
 
     if(event.target.checked) {
-        db.updateInnerTaskEntry("subTasks",true,taskId,subTaskId)
+        db.updateInnerTaskEntry("subTasks",true,taskId,subTaskId).then(task => {
+            renderSubTask(task.subTasks,task);
+        })
     } else {
-        db.updateInnerTaskEntry("subTasks",false,taskId,subTaskId)
+        db.updateInnerTaskEntry("subTasks",false,taskId,subTaskId).then(task => {
+            renderSubTask(task.subTasks,task);
+        })
     }
 
 }
@@ -153,6 +167,10 @@ function addNewSubtasks(event) {
     });
 }
 
+/* close subtask modal */
+document.querySelector(".close-subtask-modal").addEventListener("click", () => {
+    document.querySelector('.input-new-task').classList.remove('show');
+})
 
 
 

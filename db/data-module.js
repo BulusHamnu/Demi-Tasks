@@ -180,15 +180,18 @@ export class taskMangerDb {
 
     /* update a task inner entry by field */
     updateInnerTaskEntry(field,data,taskId,index) {
-        this.transaction = this.db.transaction("tasks", "readwrite");
-        const taskStore = this.transaction.objectStore("tasks");
-        let request = taskStore.get(taskId)
-        
-        request.onsuccess = (event )=> {
-            const task = event.target.result;
-            task[field][index].done = data;
-            taskStore.put(task);
-        };
+        return new Promise((resolve, reject) => {
+            this.transaction = this.db.transaction("tasks", "readwrite");
+            const taskStore = this.transaction.objectStore("tasks");
+            let request = taskStore.get(taskId)
+            
+            request.onsuccess = (event )=> {
+                const task = event.target.result;
+                task[field][index].done = data;
+                taskStore.put(task);
+                resolve(task);
+            };
+        })
     }
 
     deleteSubTask(taskId,subTaskId) {

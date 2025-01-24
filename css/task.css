@@ -147,6 +147,7 @@
     background-color: var(--secondary-color);
     padding: .3rem .5rem;
     max-width: 35rem;
+    position: relative;
 }
 .sub-task-section h3 {
     color: var(--text-color);
@@ -230,7 +231,7 @@
 .input-new-task {
     width: 16rem;
     position: absolute;
-        top: 20%;
+        top: 0%;
         left: 50%;
         transform: translate(-50%, 50%);
     margin-bottom: 1.5rem;
@@ -251,7 +252,23 @@
     width: 95%;
     height: 2rem;
 }
-.input-new-task button {
+.input-new-task button:first-child {
+    position: absolute;
+        top: 5%;
+        right: 2%;
+    padding: .2rem;
+    border-radius: .2rem;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    transition: background-color .3s linear;
+    cursor: pointer;
+}
+.input-new-task button:first-child svg {
+    width: 17px;
+    height: 17px;
+}
+.input-new-task button:last-child {
     padding: .6rem 2.5rem;
     border-radius: .2rem;
     background-color: var(--secondary-color);
