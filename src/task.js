@@ -32,6 +32,8 @@ if(taskId) {
         document.querySelector('.input-new-task').classList.add('show');
     });
 
+    document.querySelector(".delete-task").addEventListener("click", deleteTask_);
+
 });
 } else {
     console.log("No task found");
@@ -185,6 +187,23 @@ function addNewSubtasks(event) {
 document.querySelector(".close-subtask-modal").addEventListener("click", () => {
     document.querySelector('.input-new-task').classList.remove('show');
 })
+
+/* deleting a task */
+function deleteTask_(event) {
+    db.deleteTask(taskId).then((message) => {
+        if(message === "Deleted task") {
+            alert("Task deleted successfully");
+            window.location.href = "alltasks.html";
+        } else {
+            alert("Failed to delete task, try again");
+        }
+        
+    });
+}
+
+
+
+
 
 
 

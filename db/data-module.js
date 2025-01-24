@@ -158,11 +158,15 @@ export class taskMangerDb {
 
     /* deleting a task by id */
     deleteTask(taskId) {
-        this.transaction = this.db.transaction("tasks", "readwrite");
-        const taskStore = this.transaction.objectStore("tasks");
-        taskStore.delete(taskId);
-        
-        alert("Deleted task")
+        return new Promise((resolve, reject) => {
+            this.transaction = this.db.transaction("tasks", "readwrite");
+            const taskStore = this.transaction.objectStore("tasks");
+            let request = taskStore.delete(taskId);
+            
+            request.onsuccess = (event) => {
+                resolve("Deleted task");
+            }
+        })
     }
 
     /* update a task entry by field */

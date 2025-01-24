@@ -331,12 +331,15 @@
     text-decoration: none;
     color: var(--text-color);
     transition: all .2s linear;
+    white-space: wrap;
+    overflow: hidden;
 }
 .attachment-section .file-cont .task-file:hover {
     background-color: var(--secondary-color-2);
 }
 .attachment-section .file-cont .task-file .file-cover {
     width: 2.5rem;
+    min-width: 2.5rem;
     height: 2.5rem;
     border: .1rem solid var(--text-color);
     border-radius: .4rem;
