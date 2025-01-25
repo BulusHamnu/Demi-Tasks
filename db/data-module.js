@@ -51,11 +51,12 @@ export class taskMangerDb {
     /* adding new task to db */
     addTask(data) {
         return new Promise((resolve, reject) => {
-            const taskStore = this.db.transaction("tasks", "readwrite").objectStore("tasks");
+            this.transaction = this.db.transaction("tasks", "readwrite")
+            const taskStore = this.transaction.objectStore("tasks");
+
             const request = taskStore.add(data)
             request.onsuccess = (event) => {
                 resolve("saved");
-                // console.log(event)
             }
 
             request.onerror = (event) => {
@@ -180,6 +181,22 @@ export class taskMangerDb {
             task[field] = data;
             taskStore.put(task);
         };
+    }
+
+    /* Updating task */
+    updateTask(taskId,taskDetails) {
+        return new Promise((resolve, reject) => {
+            this.transaction = this.db.transaction("tasks", "readwrite");
+            const taskStore = this.transaction.objectStore("tasks");
+            let request = taskStore.get(taskId);
+
+            request.onsuccess = (event) => {
+                const task = event.target.result;
+                Object.assign(task, taskDetails);
+                taskStore.put(task);
+                resolve("task updated");
+            }
+        })
     }
 
     /* update a task inner entry by field */

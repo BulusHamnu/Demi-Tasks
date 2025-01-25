@@ -12,6 +12,8 @@ const progressText = document.querySelector(".progress-text");
 const fileCont = document.querySelector(".file-cont");
 const addNewSubTask = document.querySelector(".add-sub-task");
 const taskProgressBar = document.querySelector(".progress-bar");
+let editBtn = document.querySelector(".edit-task")
+
 
 
 const db = new taskMangerDb()
@@ -22,7 +24,6 @@ let taskId = parseInt(url);
 if(taskId) {
     db.getTask(taskId)
     .then((task) => {
-        console.log(task)
         document.title = task.title;
         renderTaskDetails(task);
 
@@ -33,6 +34,9 @@ if(taskId) {
     });
 
     document.querySelector(".delete-task").addEventListener("click", deleteTask_);
+    editBtn.addEventListener("click", editTask);
+    editBtn.setAttribute("data-taskid", `${task.id}`);
+
 
 });
 } else {
@@ -77,6 +81,8 @@ function renderTaskDetails(task) {
 
             fileCont.appendChild(fileDiv);
         })
+    } else {
+        fileCont.innerHTML = "No files attached";
     }
 }
 
@@ -199,6 +205,14 @@ function deleteTask_(event) {
         }
         
     });
+}
+
+/* editing task */
+function editTask(event) {
+    let taskId = event.target.dataset.taskid
+    if(taskId) {
+        window.location.href = `create-new-task.html?editid=${taskId}`
+    }
 }
 
 

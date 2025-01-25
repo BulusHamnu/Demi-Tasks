@@ -10,6 +10,7 @@ let taskDueDate ;
 let taskCategory ;
 let reminderType ;
 let reminderDay ;
+let newTaskStatus = "🔲 in-completed";
 let reminderTime ;
 let enabled = false;
 let subTasks = [];
@@ -40,6 +41,107 @@ const customCategoryBtn = document.getElementById("add-custom-category")
 const uploadFileBtn = document.getElementById("upload-attachment");
 const saveNewTaskBtn = document.getElementById("save-task-btn");
 const cancelTaskBtn = document.getElementById("cancel-task-btn");
+
+
+let url = new URL(window.location.href).searchParams.get("editid");
+let taskId = parseInt(url);
+
+/* this will only trigger when the user is coming from the tasks page and want to edit task */
+if(taskId) {
+  db.getTask(taskId).then((task) => {
+
+    // initialize all variable with current task data
+    taskName = task.title;
+    aboutTask = task.description;
+    taskPriority = task.priority;
+    taskDueDate = task.dueDate;
+    taskCategory = task.category;
+    reminderType = task.reminderDetails.type;
+    reminderDay = task.reminderDetails.date;
+    reminderTime = task.reminderDetails.time;
+    enabled = task.reminder;
+    subTasks = task.subTasks;
+    attachments= task.attachment;
+    newTaskStatus = task.status;
+
+    //display current task data
+    taskTitle.value = task.title;
+    taskDescription.value = task.description
+    dueDateSelector.value = task.dueDate
+    document.querySelectorAll(".task-piyority-selector").forEach( category => { if(category.value === task.priority){ category.checked = true}});
+
+    let reminderDetails = task.reminderDetails;
+
+    if (enabled) {
+      addReminderToogle.checked = true;
+      addReminderToogle.click();
+
+      document.getElementById("reminder-type").querySelectorAll("option").forEach( option => {
+        if(option.value === reminderDetails.type) { option.selected = true; }
+      }) 
+
+      reminderCalander.value = reminderDetails.date;
+      reminderTimeSelector.value = reminderDetails.time;
+    }
+
+    let categoryFound = false;
+    document.querySelectorAll(".category-selector").forEach( category => { 
+      if(category.value === task.category) {
+        category.checked = true;
+        categoryFound = true;
+      }
+
+    })
+
+    if(!categoryFound) {
+      let newCategory = document.createElement("label");
+      newCategory.setAttribute("for","business");
+      newCategory.innerHTML =  `
+        <input type="radio" id=${task.category} name="categories" value=${task.category} class="category-selector" checked>
+        ${task.category}
+      `;
+
+      categories.append(newCategory)
+    }
+
+
+    subTasks.forEach( (subtask,index) => {
+
+      let newSubtask = document.createElement("div");
+      newSubtask.classList.add("sub-task");
+      newSubtask.setAttribute("data-taskid", index);
+      newSubtask.innerHTML =  `
+        <p>${subtask.title}</p>
+        <button class="delete-sub-task-btn" id=task-${index} data-taskid=${index} >remove</button>
+      `;
+      
+      document.querySelector(".sub-tasks-list").append(newSubtask);
+      document.getElementById(`task-${index}`).addEventListener("click", deleteTask);
+    });
+    
+
+    attachments.forEach( (attachment,index) => {
+
+      let newAttachment = document.createElement("div");
+      newAttachment.classList.add("attachment");
+      newAttachment.setAttribute("data-attachmentid",`${index}`);
+
+      newAttachment.innerHTML = `
+          <div class="attachment-icon"><img src="${getFileCoverType(attachment.type)}" alt="attachment"></div> 
+          <p>${attachment.name}</p>
+
+          <button class="delete-attachment-btn" id="file-${index}" data-attachmentid=${index}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></button>
+
+      `;
+
+      document.querySelector(".attachments").append(newAttachment);
+      document.getElementById(`file-${index}`).addEventListener("click", deleteFile);
+    });
+
+    });
+
+
+}
 
 
 
@@ -236,7 +338,7 @@ let newTask = {
   description : aboutTask  ,
   dueDate : taskDueDate  ,
   priority : taskPriority  ,
-  status : "🔲 in-completed",
+  status : newTaskStatus,
   category : taskCategory ,
   reminder : enabled,
   reminderDetails : {
@@ -248,6 +350,19 @@ let newTask = {
   attachment : attachments
 }
 
+
+// checks for taskId if yes then executes edit task function else creates task
+if (taskId) {
+  db.updateTask(taskId,newTask).then( message => {
+    if(message === "task updated") {
+      alert("Task updated");
+      setTimeout(() => {window.location.href = "./allTasks.html";},300)
+    } else {
+      alert("Failed to add task try saving again");
+    }
+  })
+
+} else {
   db.addTask(newTask)
     .then( message => {
       if(message === 'saved') {
@@ -255,11 +370,13 @@ let newTask = {
         document.querySelectorAll("textarea").forEach((textarea) => {textarea.value = ""});
 
         alert("Added task");
-        window.location.href = "./allTasks.html";
+        setTimeout(() => {window.location.href = "./allTasks.html";},300)
       } else {
         alert("Failed to add task try saving again");
       }
     })
+}
+
   
 }
 
