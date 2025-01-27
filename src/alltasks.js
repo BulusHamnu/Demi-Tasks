@@ -12,6 +12,35 @@ const statusTabs = document.querySelectorAll(".category-tab")
 const db =  new taskMangerDb()
 
 
+/* If user click on detail page */
+let searchStatus = sessionStorage.getItem("status");
+if(searchStatus) {
+    console.log(searchStatus);
+
+    db.getByIndex("status",searchStatus,"all")
+        .then((tasks) => {
+            if(tasks.length > 0) {
+                renderTasks(tasks);
+                console.log(tasks)
+            } else {
+                taskGrid.style.display = "block";
+                taskGrid.innerHTML = "<h2 class='no-task'>No tasks found for this " + searchStatus + " status.</h2>";
+            }
+        })
+
+    statusTabs.forEach(tab => {
+        tab.classList.remove("active");
+        if(tab.dataset.statustype === searchStatus) {
+            console.log(tab.dataset.statustype);
+            tab.classList.add("active");
+        }
+    })
+    sessionStorage.removeItem("status");
+    
+} else {
+    /* render all task at load */
+    getAllTasks()
+}
 
 
 /* Searching function */
@@ -90,8 +119,6 @@ function getAllTasks() {
     });
 }
 
-/* render all task at load */
-getAllTasks()
 
 
 /* seach for tasks by status and sortby function*/

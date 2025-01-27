@@ -106,8 +106,8 @@
     transform: translate(-50%, -50%);
     fill: none;
     stroke-width:11px;
-    stroke-dasharray : 255;
-    stroke-dashoffset: 255;
+    stroke-dasharray : 219.91;
+    stroke-dashoffset: 219.91;
     transition: stroke-dashoffset 1s ease-out;
 }
 .task-details #outter svg circle {
@@ -131,10 +131,11 @@
     
 }
 .task-details .detail-card:nth-child(3) #outter svg {
-    stroke: var(--incomplete-color);
+    stroke: var(--overdue-color);
+
 }
 .task-details .detail-card:nth-child(4) #outter svg {
-    stroke: var(--overdue-color);
+    stroke: var(--incomplete-color);
 }
 
 
@@ -186,6 +187,7 @@
 }
 .vc-date__btn[aria-selected="true"] {
     background-color: var(--primary-color);
+    --tasks-num : "0";
 }
 .vc-date[data-vc-date-today] .vc-date__btn {
     background-color: bisque;
@@ -195,7 +197,7 @@ body.dark-theme .vc-date[data-vc-date-today] .vc-date__btn {
 }
 
 .vc-date__btn[aria-selected="true"]::after {
-    content: "5";
+    content: var(--tasks-num);
     position: absolute;
         top: -15%;
         left: 65%;
