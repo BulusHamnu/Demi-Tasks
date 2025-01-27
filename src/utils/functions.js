@@ -50,3 +50,27 @@ export function changeDateFormat(dateData) {
 
     return `${date} ${month} ${year}`
 }
+
+
+
+/* function for calucating circle fill percentage */
+export function setFillPercent(percent) {
+    const circumference = 219.91;
+    const offset = circumference * ( 1 - percent/100 );
+
+    return offset;
+}
+
+/* get percentage */
+export function getPercentage(value,total) {
+    if(value === 0 ) {
+        return 0;
+    }
+
+    let percentage = value / total * 100;
+    return Math.floor(percentage);
+}
+
+
+
+

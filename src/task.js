@@ -103,7 +103,14 @@ function renderSubTask(subtasks,task) {
 
 
     //setting the status based on the amount of subtasks completed
-    if (doneSubtask.length === task.subTasks.length) {
+    if (task.dueDate === new Date()) {
+        // console.log("due today")
+        
+        // if(task.status !== "⏰ over-due") {
+        //     db.updateTaskEntry("status","⏰ over-due",task.id);
+        // }
+        
+    } else if (doneSubtask.length === task.subTasks.length) {
         if(task.status !== "✅ completed") {
             db.updateTaskEntry("status","✅ completed",task.id);
         }

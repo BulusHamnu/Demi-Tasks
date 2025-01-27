@@ -28,7 +28,7 @@ export class taskMangerDb {
             request.onsuccess = (event) => {
                 this.db = event.target.result;
                 resolve(this.db);
-                console.log("index db opened successfully ", this.db);
+                // console.log("index db opened successfully ", this.db);
             };
 
             request.onupgradeneeded = (event) => {
@@ -131,29 +131,31 @@ export class taskMangerDb {
     /* getting all task by status */
     getByIndex(method,object,sort) {
         return new Promise((resolve, reject) => {
-            this.transaction = this.db.transaction("tasks");
-            const taskStore = this.transaction.objectStore("tasks");
+            this.openDb().then((db) => {
+                this.transaction = this.db.transaction("tasks");
+                const taskStore = this.transaction.objectStore("tasks");
 
-            let request;
-            if(method === "status") {
-                request = taskStore.index("status").getAll(object);
+                let request;
+                if(method === "status") {
+                    request = taskStore.index("status").getAll(object);
 
-            } else if(method === "category") {
-                request = taskStore.index("status").getAll(object);
+                } else if(method === "category") {
+                    request = taskStore.index("status").getAll(object);
 
-            } else if (method === "priority") {
-                request = taskStore.index("priority").getAll(object);
-            }
-
-            request.onsuccess = (event) => {
-                let allTask = event.target.result
-                if(sort == "all") {
-                    resolve(allTask);
-                } else {
-                    resolve(allTask.filter(task => task.category === sort));
+                } else if (method === "priority") {
+                    request = taskStore.index("priority").getAll(object);
                 }
-                
-            };
+
+                request.onsuccess = (event) => {
+                    let allTask = event.target.result
+                    if(sort == "all") {
+                        resolve(allTask);
+                    } else {
+                        resolve(allTask.filter(task => task.category === sort));
+                    }
+                    
+                };
+            });
         });
     }
 
