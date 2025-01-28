@@ -72,5 +72,13 @@ export function getPercentage(value,total) {
 }
 
 
+export function checkForDued(taskDueDate) {
+    let now = new Date().toISOString().split("T")[0];
+    
+    if(taskDueDate < now ) {
+        return true;
+    }
+}
+
 
 

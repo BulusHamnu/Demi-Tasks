@@ -140,7 +140,7 @@ export class taskMangerDb {
                     request = taskStore.index("status").getAll(object);
 
                 } else if(method === "category") {
-                    request = taskStore.index("status").getAll(object);
+                    request = taskStore.index("category").getAll(object);
 
                 } else if (method === "priority") {
                     request = taskStore.index("priority").getAll(object);

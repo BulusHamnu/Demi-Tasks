@@ -208,6 +208,7 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
     max-width: 50rem;
     height: 13rem;
     transition: height .4s ease-out;
+    margin-bottom:  5rem;
 }
 .task-categories.show {
     height: 17rem;
@@ -482,6 +483,10 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
     .reminder-selector {
         padding: 1rem .5rem;
     }
+
+    .task-categories {
+        margin-bottom:  3.5rem;
+    }
 }
 @media (min-width: 439px) {
     .task-categories {
@@ -503,6 +508,7 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
         max-width: 40rem;
     }
     
+    
 }
 
 
@@ -515,6 +521,10 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
     }
     .about-task .tittle { 
         gap: 3rem;
+    }
+
+    .task-categories {
+        margin-bottom:  1rem;
     }
 }
 

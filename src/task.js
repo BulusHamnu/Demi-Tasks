@@ -2,6 +2,7 @@
 import { taskMangerDb } from "../db/data-module.js";
 import {changeDateFormat} from "./utils/functions.js";
 import {getFileCoverType} from "./utils/functions.js";
+import {checkForDued} from "./utils/functions.js";
 const taskTitle = document.querySelector(".task-header");
 const taskDescription = document.querySelector(".task-description");
 const taskDueDate = document.querySelector(".task-due-date");
@@ -102,13 +103,13 @@ function renderSubTask(subtasks,task) {
     taskProgressBar.style.setProperty("--progressBarWidth",`${barFill}px`);
 
 
-    //setting the status based on the amount of subtasks completed
-    if (task.dueDate === new Date()) {
-        // console.log("due today")
-        
-        // if(task.status !== "⏰ over-due") {
-        //     db.updateTaskEntry("status","⏰ over-due",task.id);
-        // }
+    //setting the status based on the amount of subtasks completed and also setting dued
+    let now = new Date().toISOString().split("T")[0];
+
+    if (checkForDued(task.dueDate)) {
+        if(task.status !== "⏰ over-due") {
+            db.updateTaskEntry("status","⏰ over-due",task.id);
+        }
         
     } else if (doneSubtask.length === task.subTasks.length) {
         if(task.status !== "✅ completed") {
