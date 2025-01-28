@@ -169,17 +169,16 @@ function initCalander(tasksDate) {
     // selectionDatesMode: 'multiple',
     selectedDates: tasksDate.map(d => {return d}),
     onClickDate(self,event) {
-        
-        console.log(event.target.ariaSelected);
-        console.log(event.target.parentElement.dataset.vcDate)
+        let btnDate = event.target.parentElement.dataset.vcDate;
 
+        if(tasksDate.includes(btnDate) ) {
+          sessionStorage.setItem("dateId",btnDate);
+          window.location.href = "alltasks.html";
 
-        if (event.target.ariaSelected) {
         }
 
         setAmountOfTasks(tasksDate,dates)
 
-        // window.location.href = `${self.context.selectedDates}`
     },
     onClickArrow(self) {
       setAmountOfTasks(tasksDate,dates)

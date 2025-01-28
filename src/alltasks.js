@@ -1,8 +1,9 @@
 import { taskMangerDb } from "../db/data-module.js";
 import {changeDateFormat} from "../src/utils/functions.js";
+import {checkForDued} from "./utils/functions.js";
 let search = document.querySelector(".search");
 let searchItem = document.querySelector(".search-item");
-const searchBox = document.querySelector(".search-box")
+const searchBox = document.querySelector(".search-box");
 const taskGrid = document.querySelector(".tab-grid");
 const searchButtonSearch = document.querySelector(".search-button-search")
 const searchButtonBancel = document.querySelector(".search-button-cancel");
@@ -12,16 +13,19 @@ const statusTabs = document.querySelectorAll(".category-tab")
 const db =  new taskMangerDb()
 
 
+/* if tasks are to be render buy there duedate */
+let dateId = sessionStorage.getItem("dateId");
+
+
 /* If user click on detail page */
 let searchStatus = sessionStorage.getItem("status");
 if(searchStatus) {
-    console.log(searchStatus);
 
     db.getByIndex("status",searchStatus,"all")
         .then((tasks) => {
             if(tasks.length > 0) {
                 renderTasks(tasks);
-                console.log(tasks)
+                
             } else {
                 taskGrid.style.display = "block";
                 taskGrid.innerHTML = "<h2 class='no-task'>No tasks found for this " + searchStatus + " status.</h2>";
@@ -31,12 +35,27 @@ if(searchStatus) {
     statusTabs.forEach(tab => {
         tab.classList.remove("active");
         if(tab.dataset.statustype === searchStatus) {
-            console.log(tab.dataset.statustype);
+            
             tab.classList.add("active");
         }
     })
     sessionStorage.removeItem("status");
     
+} else if (dateId) {
+
+    db.getAllTasks("all").then(tasks => {
+        if(tasks.length > 0) {
+            let selectedTasks = tasks.filter(task => task.dueDate === dateId);
+            renderTasks(selectedTasks);
+
+        } else {
+            taskGrid.style.display = "block";
+            taskGrid.innerHTML = "<h2 class='no-task'>You have no task available please create new one!</h2>";
+        }
+    });
+
+    sessionStorage.removeItem("dateId");
+
 } else {
     /* render all task at load */
     getAllTasks()
@@ -167,9 +186,9 @@ function renderTasks(tasks) {
                 </span>
 
                 <div class="categories-label">
-                    <a href="" class="piyority" data-type="${task.priority}">${task.priority}</a>
-                    <a href="" class="category" data-type="${task.category}">${task.category}</a>
-                    <a href="" class="status" data-type="${task.status}">${task.status}</a>
+                    <a href="#" class="piyority" data-type="${task.priority}">${task.priority}</a>
+                    <a href="#" class="category" data-type="${task.category}">${task.category}</a>
+                    <a href="#" class="status" data-type="${task.status}">${checkForDued(task.dueDate)? "⏰ Over due": task.status}</a>
                 </div>
             </div>
 
@@ -182,6 +201,5 @@ function renderTasks(tasks) {
 }
 
 
-// setTimeout(() => db.updateTaskEntry("category","fitness",3),200);
 
 
