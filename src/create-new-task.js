@@ -15,6 +15,7 @@ let reminderTime ;
 let enabled = false;
 let subTasks = [];
 let attachments = [];
+let allCategories = [];
 const db = new taskMangerDb();
 
 /* Getting all input */
@@ -148,48 +149,23 @@ if(taskId) {
 
 
 /* This render all the categories from db */
-const moreCategories = [
-  {
-    id: 1,
-    name: "💼 business"
-  },
-  {
-    id: 2,
-    name: "👤 personal"
-  },
-  {
-    id: 3,
-    name: "🗂️ projects"
-  },
-  {
-    id: 4,
-    name: "🏋 fitness"
-  },
-  {
-    id: 5,
-    name: "🔍 research"
-  },
-  {
-    id: 6,
-    name: "🎨 hobbies"
-  },
-  {
-    id: 7,
-    name: "🎓 education"
-  },
-  {
-    id: 8,
-    name: "🛠️maintenance"
-  },
 
-];
+db.getAllCategories().then( data => {
+  if(data.length > 0) {
+    console.log(data);
+    allCategories = data;
+    renderCustomCategory();
+  }
 
-function renderCustomCategory(id) {
-  moreCategories.forEach((category,index) => {
+})
+
+
+function renderCustomCategory() {
+  allCategories.forEach((category,index) => {
     let newCategory = document.createElement("label");
       newCategory.setAttribute("for",`${category.name}`);
       newCategory.innerHTML =  `
-        <input type="radio" id="${category.name}" name="categories" value="${category.name}" class="category-selector" ${index === moreCategories.length - 1? "checked" : ""}>
+        <input type="radio" id="${category.name}" name="categories" value="${category.name}" class="category-selector" ${index === allCategories.length - 1? "checked" : ""}>
         ${category.name}
       `;
 
@@ -208,9 +184,9 @@ function renderCustomCategory(id) {
 
 }
 
-renderCustomCategory();
 
-/* end of custom category render */
+
+/* end of render */
 
 
 
@@ -249,10 +225,20 @@ function addCustomCategory(event) {
   let newCategory = {
     name : taskCategory
   }
-  moreCategories.push(newCategory);
-  categories.innerHTML = ``;
-  renderCustomCategory();
 
+  allCategories.push(newCategory);
+  db.addNewCategory(newCategory).then(message => {
+    if(message === "success") {
+      categories.innerHTML = ``;
+      renderCustomCategory();
+    } else {
+      alert("Failed to add category, try again");
+    }
+
+  })
+
+
+  
   customCategoryInputbox.value = '';
 
   customCategoryInput.classList.remove("show")

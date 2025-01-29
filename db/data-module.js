@@ -28,16 +28,60 @@ export class taskMangerDb {
             request.onsuccess = (event) => {
                 this.db = event.target.result;
                 resolve(this.db);
-                // console.log("index db opened successfully ", this.db);
+                console.log("index db opened successfully ", this.db);
+
             };
 
             request.onupgradeneeded = (event) => {
                 this.db = event.target.result;
-                const taskStore = this.db.createObjectStore("tasks", { keyPath: "id",autoIncrement: true });
+
+                if(!this.db.objectStoreNames.contains("tasks")) {
+                    const taskStore = this.db.createObjectStore("tasks", { keyPath: "id",autoIncrement: true });
             
-                taskStore.createIndex("category", "dueDate", { unique: false });
-                taskStore.createIndex("status", "status", { unique: false });
-                taskStore.createIndex("priority", "priority", { unique: false });
+                    taskStore.createIndex("category", "category", { unique: false });
+                    taskStore.createIndex("status", "status", { unique: false });
+                    taskStore.createIndex("priority", "priority", { unique: false });
+                }
+                
+
+                if(!this.db.objectStoreNames.contains("categories")) {
+
+                    const categoryStore = this.db.createObjectStore("categories", { keyPath: "id",autoIncrement: true });
+
+                    const moreCategories = [
+                        {
+                          name: "💼 business"
+                        },
+                        {
+                          name: "👤 personal"
+                        },
+                        {
+                          name: "🗂️ projects"
+                        },
+                        {
+                          name: "🏋 fitness"
+                        },
+                        {
+                          name: "🔍 research"
+                        },
+                        {
+                          name: "🎨 hobbies"
+                        },
+                        {
+                          name: "🎓 education"
+                        },
+                        {
+                          name: "🛠️maintenance"
+                        },
+                      
+                      ];
+                    
+                    moreCategories.forEach( category => {
+                        categoryStore.add(category);
+                    });
+                }
+
+                
             
         };
 
@@ -249,7 +293,40 @@ export class taskMangerDb {
             }
     
     });
-}
+    }
+
+    /* getting all category */ 
+    getAllCategories() {
+        return new Promise((resolve, reject) => {
+            this.openDb().then(db => {
+                let categoriesStore = db.transaction("categories", "readwrite").objectStore("categories");
+                let request = categoriesStore.getAll();
+
+                request.onsuccess = (event) => {
+                    resolve(event.target.result);
+                }
+
+                request.onerror = (event) => {
+                    reject([]);
+                }
+
+            })
+        });
+    }
+
+    addNewCategory(category) {
+        return new Promise((resolve, reject) => {
+            let categoriesStore = this.db.transaction("categories", "readwrite").objectStore("categories");
+            let request = categoriesStore.add(category);
+            request.onsuccess = (event) => {
+                resolve("success")
+            };
+            request.onerror = (event) => {
+                reject("error");
+            }
+        });
+    }
+    
 }
 
 
