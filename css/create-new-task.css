@@ -204,15 +204,10 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
 
  /* task-categories section*/
 .task-categories {
-    padding-bottom: 1.2rem;
     max-width: 50rem;
-    height: 13rem;
     transition: height .4s ease-out;
-    margin-bottom:  5rem;
 }
-.task-categories.show {
-    height: 17rem;
-}
+
 
 
 
@@ -246,13 +241,18 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
 .task-categories .custom-category {
     display: flex;
     gap: 1rem;
-    transition: opacity .5s linear;
+    height: 0;
+    transition: opacity .5s linear, height .3s ease-out;
     opacity: 0;
     visibility: hidden;
+    /* outline: 1px solid blue; */
+    padding: .2rem;
 }
 .task-categories .custom-category.show {
     opacity: 1;
     visibility: visible;
+    height: 3rem;
+
 }
 
 
@@ -263,6 +263,7 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
 .task-categories #add-custom-category {
     background-color: var(--secondary-color-2);
     padding: .55rem 2.5rem;
+    height: 2.5rem;
     border: none;
     border-radius: .2rem;
     color: var(--text-color);
@@ -484,18 +485,8 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
         padding: 1rem .5rem;
     }
 
-    .task-categories {
-        margin-bottom:  3.5rem;
-    }
 }
-@media (min-width: 439px) {
-    .task-categories {
-        height: 10rem;
-    }
-    .task-categories.show {
-        height: 14rem;
-    }
-}
+
 
 @media (min-width: 576px) {
     .task-date-section.add-height{
@@ -524,7 +515,7 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
     }
 
     .task-categories {
-        margin-bottom:  1rem;
+        margin-bottom:  2rem;
     }
 }
 

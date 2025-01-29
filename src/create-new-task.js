@@ -43,6 +43,8 @@ const saveNewTaskBtn = document.getElementById("save-task-btn");
 const cancelTaskBtn = document.getElementById("cancel-task-btn");
 
 
+
+
 let url = new URL(window.location.href).searchParams.get("editid");
 let taskId = parseInt(url);
 
@@ -145,6 +147,72 @@ if(taskId) {
 
 
 
+/* This render all the categories from db */
+const moreCategories = [
+  {
+    id: 1,
+    name: "💼 business"
+  },
+  {
+    id: 2,
+    name: "👤 personal"
+  },
+  {
+    id: 3,
+    name: "🗂️ projects"
+  },
+  {
+    id: 4,
+    name: "🏋 fitness"
+  },
+  {
+    id: 5,
+    name: "🔍 research"
+  },
+  {
+    id: 6,
+    name: "🎨 hobbies"
+  },
+  {
+    id: 7,
+    name: "🎓 education"
+  },
+  {
+    id: 8,
+    name: "🛠️maintenance"
+  },
+
+];
+
+function renderCustomCategory(id) {
+  moreCategories.forEach((category,index) => {
+    let newCategory = document.createElement("label");
+      newCategory.setAttribute("for",`${category.name}`);
+      newCategory.innerHTML =  `
+        <input type="radio" id="${category.name}" name="categories" value="${category.name}" class="category-selector" ${index === moreCategories.length - 1? "checked" : ""}>
+        ${category.name}
+      `;
+
+      categories.append(newCategory);
+  })
+
+  let customCategory = document.createElement("label");
+  customCategory.setAttribute("for",`other`);
+  customCategory.innerHTML = `
+    <input type="radio" id="other" name="categories" value="other" class="category-selector">
+      add custom
+  `;
+
+  categories.append(customCategory);
+
+
+}
+
+renderCustomCategory();
+
+/* end of custom category render */
+
+
 
 /* event for all input */
 taskTitle.addEventListener("change",() => { taskName = taskTitle.value });
@@ -156,31 +224,39 @@ taskPiyorities.addEventListener('click',(event) => { taskPriority = event.target
 dueDateSelector.addEventListener("change", () => {taskDueDate = dueDateSelector.value;} );
 
 categories.addEventListener("click",(event) => {
-  taskCategory = event.target.value;
+  console.log(event.target.value)
 
   if(event.target.value === "other") {
-    customCategoryBtn.addEventListener("click",() => {
-      taskCategory = "⚙️ " + customCategoryInputbox.value
-      
 
-      let newCategory = document.createElement("label");
-      newCategory.setAttribute("for","business");
-      newCategory.innerHTML =  `
-        <input type="radio" id=${taskCategory} name="categories" value=${taskCategory} class="category-selector" checked>
-        ${taskCategory}
-      `;
+    customCategoryInput.classList.add("show");
 
-      categories.append(newCategory)
+    event.target.checked = false;
 
-      customCategoryInputbox.value = '';
-
-      event.target.checked = false;
-      taskCategories.classList.remove("show")
-      customCategoryInput.classList.remove("show")
-    })
+    return ;
   }
 
+  customCategoryInput.classList.remove("show");
+  taskCategory = event.target.value;
+
+  
+
 })
+
+/* event listeneer for custom categorybtn */
+customCategoryBtn.addEventListener("click",addCustomCategory)
+function addCustomCategory(event) {
+  taskCategory = "⚙️ " + customCategoryInputbox.value;
+  let newCategory = {
+    name : taskCategory
+  }
+  moreCategories.push(newCategory);
+  categories.innerHTML = ``;
+  renderCustomCategory();
+
+  customCategoryInputbox.value = '';
+
+  customCategoryInput.classList.remove("show")
+}
 
 
 reminderSelector.addEventListener("change",() => {
@@ -263,15 +339,6 @@ cancelTaskBtn.addEventListener('click', () => {
   window.location.href = 'allTasks.html';
 })
 
-
-
-/* shows an input when user want to add other category */
-addOtherCategoryToogle.addEventListener("click", (event) => {
-  if(event.target.checked) {
-    customCategoryInput.classList.toggle("show")
-    taskCategories.classList.toggle("show")
-  }
-})
 
 
 /* shows a reminder option when user want to add reminder */
