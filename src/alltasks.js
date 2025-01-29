@@ -9,8 +9,22 @@ const searchButtonSearch = document.querySelector(".search-button-search")
 const searchButtonBancel = document.querySelector(".search-button-cancel");
 const searchButton = document.querySelector(".search-button");
 const header = document.querySelector("header");
-const statusTabs = document.querySelectorAll(".category-tab")
+const statusTabs = document.querySelectorAll(".category-tab");
+const sortByselector = document.querySelector("#sort-category")
 const db =  new taskMangerDb()
+
+
+/* setting sorting options*/
+db.getAllCategories().then( data => {
+    data.forEach(category => {
+        let newOption = document.createElement("option");
+        newOption.value = category.name;
+        newOption.textContent = category.name //.split(" ")[1];
+        sortByselector.appendChild(newOption);
+    })
+})
+
+
 
 
 /* if tasks are to be render buy there duedate */

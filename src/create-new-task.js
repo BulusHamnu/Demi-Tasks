@@ -206,8 +206,6 @@ categories.addEventListener("click",(event) => {
 
     customCategoryInput.classList.add("show");
 
-    event.target.checked = false;
-
     return ;
   }
 
