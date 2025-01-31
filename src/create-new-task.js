@@ -46,6 +46,50 @@ const cancelTaskBtn = document.getElementById("cancel-task-btn");
 
 
 
+/* This render all the categories from db */
+
+db.getAllCategories().then( data => {
+  if(data.length > 0) {
+    allCategories = data;
+    renderCustomCategory();
+    renderCategorySettings();
+  }
+
+})
+
+
+function renderCustomCategory() {
+  categories.innerHTML = ``;
+
+  allCategories.forEach((category,index) => {
+    let newCategory = document.createElement("label");
+      newCategory.setAttribute("for",`${category.name}`);
+      newCategory.innerHTML =  `
+        <input type="radio" id="${category.name}" name="categories" value="${category.name}" class="category-selector" ${index === allCategories.length - 1? "checked" : ""}>
+        ${category.name}
+      `;
+
+      categories.append(newCategory);
+  })
+
+  let customCategory = document.createElement("label");
+  customCategory.setAttribute("for",`other`);
+  customCategory.innerHTML = `
+    <input type="radio" id="other" name="categories" value="other" class="category-selector">
+      add custom
+  `;
+
+  categories.append(customCategory);
+
+
+}
+
+/* end of render */
+
+
+ 
+
+
 let url = new URL(window.location.href).searchParams.get("editid");
 let taskId = parseInt(url);
 
@@ -148,45 +192,102 @@ if(taskId) {
 
 
 
-/* This render all the categories from db */
-
-db.getAllCategories().then( data => {
-  if(data.length > 0) {
-    console.log(data);
-    allCategories = data;
-    renderCustomCategory();
-  }
-
-})
 
 
-function renderCustomCategory() {
+/* categories setting */
+
+document.querySelector(".category-setting-btn").addEventListener("click", (event) => {
+  document.querySelector(".category-settings").classList.toggle("show");
+  categories.classList.toggle("hide");
+  event.currentTarget.classList.toggle("showing");
+
+  document.querySelector(".promt-message").classList.remove("show-promt-message");
+  document.querySelector(".promt-message-overlay").classList.remove("show-overlay");
+
+});
+
+
+function renderCategorySettings() {
+  document.querySelector(".all-categories").innerHTML = "";
+
   allCategories.forEach((category,index) => {
+  
     let newCategory = document.createElement("label");
-      newCategory.setAttribute("for",`${category.name}`);
-      newCategory.innerHTML =  `
-        <input type="radio" id="${category.name}" name="categories" value="${category.name}" class="category-selector" ${index === allCategories.length - 1? "checked" : ""}>
-        ${category.name}
-      `;
-
-      categories.append(newCategory);
+    newCategory.setAttribute("for",category.name);
+    newCategory.innerHTML =  `
+      ${category.name}
+  
+      <svg class="delete-category" id="delete-category-${index}" data-categoryid="${category.id}" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+    `;
+  
+    document.querySelector(".all-categories").appendChild(newCategory)
+    document.querySelector(`#delete-category-${index}`).addEventListener("click", deleteCategory)
+  
   })
-
-  let customCategory = document.createElement("label");
-  customCategory.setAttribute("for",`other`);
-  customCategory.innerHTML = `
-    <input type="radio" id="other" name="categories" value="other" class="category-selector">
-      add custom
-  `;
-
-  categories.append(customCategory);
 
 
 }
 
 
+function deleteCategory(event) {
+  let category = event.currentTarget.parentElement.getAttribute("for");
 
-/* end of render */
+  let ele = event.currentTarget;
+  let categoryId = parseInt(ele.dataset.categoryid);
+  let categoryNum = parseInt(ele.id.split("-")[2]);
+
+  db.getAllTasks(category).then( tasks => {
+    if(tasks.length > 0) {
+    alert("there are " + tasks.length + " tasks link to this category you need to change it before you can delete it!");
+
+    } else {
+      document.querySelector(".promt-message").classList.add("show-promt-message");
+      document.querySelector(".promt-message-overlay").classList.add("show-overlay");
+      document.querySelector("#delete-task-btn").setAttribute("data-categoryIds",`${categoryId}-${categoryNum}`);
+
+    }
+  });
+
+  
+
+}
+
+/* event listener for deletion comfirmation btn */
+
+document.querySelector(".promt-message-btn-cont").addEventListener("click", (event) => {
+  if(event.target.id == "cancel-delete-btn") {
+    document.querySelector(".promt-message").classList.remove("show-promt-message");
+    document.querySelector(".promt-message-overlay").classList.remove("show-overlay");
+
+  } else if (event.target.id == "delete-task-btn") {
+    let categoryId = parseInt(event.target.dataset.categoryids.split("-")[0]);
+    let categoryNum = parseInt(event.target.dataset.categoryids.split("-")[1]); 
+
+    db.deleteCategory(categoryId).then(message => {
+        if(message === "success") {    
+          allCategories.splice(categoryNum,1);
+          renderCustomCategory();
+          renderCategorySettings();
+
+          document.querySelector(".promt-message").classList.remove("show-promt-message");
+          document.querySelector(".promt-message-overlay").classList.remove("show-overlay");
+
+          alert("Category deleted");
+    
+        } else {
+          document.querySelector(".promt-message").classList.remove("show-promt-message");
+          document.querySelector(".promt-message-overlay").classList.remove("show-overlay");
+
+          alert("Failed to delete category");
+        }
+    
+      });
+  }
+
+});
+
+
+
 
 
 
@@ -200,7 +301,6 @@ taskPiyorities.addEventListener('click',(event) => { taskPriority = event.target
 dueDateSelector.addEventListener("change", () => {taskDueDate = dueDateSelector.value;} );
 
 categories.addEventListener("click",(event) => {
-  console.log(event.target.value)
 
   if(event.target.value === "other") {
 
@@ -216,6 +316,8 @@ categories.addEventListener("click",(event) => {
 
 })
 
+
+
 /* event listeneer for custom categorybtn */
 customCategoryBtn.addEventListener("click",addCustomCategory)
 function addCustomCategory(event) {
@@ -227,8 +329,17 @@ function addCustomCategory(event) {
   allCategories.push(newCategory);
   db.addNewCategory(newCategory).then(message => {
     if(message === "success") {
-      categories.innerHTML = ``;
-      renderCustomCategory();
+      // categories.innerHTML = ``;
+
+      db.getAllCategories().then( data => {
+        if(data.length > 0) {
+          allCategories = data;
+          renderCustomCategory();
+          renderCategorySettings();
+        }
+      
+      });
+
     } else {
       alert("Failed to add category, try again");
     }

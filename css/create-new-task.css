@@ -209,11 +209,179 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
 }
 
 
-
-
-.task-categories h2 {
+.task-categories .header h2 {
     margin-bottom: .5rem;
     text-transform: capitalize;
+}
+.task-categories .header {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.task-categories .category-settings {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: .3rem;
+    display: none;
+    position: relative;
+}
+.task-categories .category-settings h3 {
+    white-space: wrap;
+}
+.task-categories .category-settings.show {
+    display: block;
+}
+
+.task-categories .category-settings .promt-message {
+    display: none;
+    flex-flow: column nowrap;
+   outline: 1px solid var(--secondary-color-2);
+   background-color: var(--primary-color);
+   padding: .5rem;
+   width: 95%;
+   max-width: 25rem;
+   height: 10rem;
+   border-radius: .2rem;
+   position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+}
+.task-categories .category-settings .promt-message.show-promt-message {
+    display: flex;
+}
+
+.task-categories .category-settings .promt-message-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    z-index: 2;
+}
+.task-categories .category-settings .promt-message-overlay.show-overlay {
+    display: block;
+}
+
+.task-categories .category-settings .promt-message p {
+   font-size: 1.5rem;
+   line-height: 1.9rem;
+}
+.task-categories .category-settings .promt-message .promt-message-btn-cont  {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+.task-categories .category-settings .promt-message .promt-message-btn-cont button {
+   padding: .6rem 2rem;
+   background-color: var(--secondary-color);
+   color: var(--text-color);
+   border: none;
+   border-radius: .2rem;
+   transition: background-color .2s linear;
+   cursor: pointer;
+   width: 48%;
+}
+
+.task-categories .category-settings .promt-message .promt-message-btn-cont button:first-child {
+   background-color: rgb(219, 12, 12);
+}
+.task-categories .category-settings .promt-message .promt-message-btn-cont button:last-child {
+    background-color: rgb(13, 20, 219);
+ }
+.task-categories .category-settings .promt-message .promt-message-btn-cont button:first-child:hover {
+   background-color: red;
+}
+.task-categories .category-settings .promt-message .promt-message-btn-cont button:last-child:hover {
+    background-color: rgb(0, 8, 255);
+ }
+
+
+.task-categories .category-settings .all-categories{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 8rem);
+    grid-auto-rows: 2rem;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-bottom: .5rem;
+}
+.task-categories .category-settings .all-categories label{
+    display: flex;
+    align-items: center;
+    flex-flow: row nowrap;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: .1rem;
+    text-transform: capitalize;
+    white-space: nowrap;
+    border-radius: .2rem;
+}
+.task-categories .category-settings .all-categories label .delete-category{
+    height: 20px;
+    width: 20px;
+    margin-left: auto;
+    margin-right: .4rem;
+    cursor: pointer;
+    fill: rgb(204, 12, 12);
+    transition: fill .2s linear;
+}
+.task-categories .category-settings .all-categories label .delete-category:hover{
+    fill: red;
+}
+
+
+
+.task-categories .header .category-setting-btn {
+    padding: .2rem;
+    cursor: pointer;
+    background-color: transparent;
+    color: var(--text-color);
+    border: none;
+    border-radius: .3rem;
+    transition: background-color .3s linear;
+    position: relative;
+}
+.task-categories .header .category-setting-btn .close {
+    display: none;
+}
+.task-categories .header .category-setting-btn.showing .close {
+    display: block;
+}
+.task-categories .header .category-setting-btn.showing .open {
+    display: none;
+}
+
+.task-categories .header .category-setting-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.task-categories .header .category-setting-btn:after {
+    content: "Category setting";
+    position: absolute;
+        top: 50%;
+        right: 100%;
+    padding: .35rem .6rem;
+    font-size: 1.1rem;
+    background-color: var(--secondary-color-2);
+    border-radius: .3rem;
+    white-space: nowrap;
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease-out;
+}
+.task-categories .header .category-setting-btn:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+.task-categories .header .category-setting-btn  svg {
+    fill: var(--text-color);
 }
 .task-categories .categories {
    display: grid;
@@ -221,6 +389,10 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
    gap: .9rem;
    margin-bottom: 2rem;
    transition: border-color .3s ease-out;
+}
+.task-categories .categories.hide {
+   display: none;
+
 }
 .task-categories .categories.error {
     border: 1px solid red;
@@ -500,6 +672,7 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
     }
     
     
+    
 }
 
 
@@ -517,7 +690,22 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
     .task-categories {
         margin-bottom:  2rem;
     }
+
+    .task-categories .category-settings .all-categories{
+        grid-template-columns: repeat(auto-fill, 9rem);
+    }
+
+    
+    
 }
 
 
-
+@media (min-width: 992px) {
+    .task-categories .header .category-setting:after {
+            top: 50%;
+            left: 100%;
+        width: fit-content;
+        padding: .4rem .6rem;
+        font-size: 1.2rem;
+    }
+}

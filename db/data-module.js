@@ -314,6 +314,23 @@ export class taskMangerDb {
         });
     }
 
+    /* deleting a category */
+    deleteCategory(categoryId) {
+        
+        return new Promise((resolve, reject) => {
+            let categoriesStore = this.db.transaction("categories", "readwrite").objectStore("categories");
+            let request = categoriesStore.delete(categoryId);
+
+            request.onsuccess = (event) => {
+                resolve("success")
+            };
+
+            request.onerror = (event) => {
+                reject("error");
+            }
+        });
+    }
+
     addNewCategory(category) {
         return new Promise((resolve, reject) => {
             let categoriesStore = this.db.transaction("categories", "readwrite").objectStore("categories");
