@@ -51,21 +51,21 @@ const cancelTaskBtn = document.getElementById("cancel-task-btn");
 db.getAllCategories().then( data => {
   if(data.length > 0) {
     allCategories = data;
-    renderCustomCategory();
+    renderCustomCategory(false);
     renderCategorySettings();
   }
 
 })
 
 
-function renderCustomCategory() {
+function renderCustomCategory(c) {
   categories.innerHTML = ``;
 
   allCategories.forEach((category,index) => {
     let newCategory = document.createElement("label");
       newCategory.setAttribute("for",`${category.name}`);
       newCategory.innerHTML =  `
-        <input type="radio" id="${category.name}" name="categories" value="${category.name}" class="category-selector" ${index === allCategories.length - 1? "checked" : ""}>
+        <input type="radio" id="${category.name}" name="categories" value="${category.name}" class="category-selector" ${index === allCategories.length - 1 && c? "checked" : ""}>
         ${category.name}
       `;
 
@@ -238,7 +238,7 @@ function deleteCategory(event) {
 
   db.getAllTasks(category).then( tasks => {
     if(tasks.length > 0) {
-    alert("there are " + tasks.length + " tasks link to this category you need to change it before you can delete it!");
+    alert(`there ${tasks.length === 1? "is" : "are"} ${tasks.length} tasks link to this category you need to change it before you can delete it!`);
 
     } else {
       document.querySelector(".promt-message").classList.add("show-promt-message");
@@ -266,7 +266,7 @@ document.querySelector(".promt-message-btn-cont").addEventListener("click", (eve
     db.deleteCategory(categoryId).then(message => {
         if(message === "success") {    
           allCategories.splice(categoryNum,1);
-          renderCustomCategory();
+          renderCustomCategory(false);
           renderCategorySettings();
 
           document.querySelector(".promt-message").classList.remove("show-promt-message");
@@ -334,7 +334,7 @@ function addCustomCategory(event) {
       db.getAllCategories().then( data => {
         if(data.length > 0) {
           allCategories = data;
-          renderCustomCategory();
+          renderCustomCategory(true);
           renderCategorySettings();
         }
       

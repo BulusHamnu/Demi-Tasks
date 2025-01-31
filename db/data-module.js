@@ -1,4 +1,5 @@
 /* Handling my index db */
+import {changeDateFormat} from "../src/utils/functions.js";
 
 export class taskMangerDb {
 
@@ -138,9 +139,24 @@ export class taskMangerDb {
 
             request.onsuccess = (event) => {
                 let result = event.target.result;
-                let results2 = result.filter(task => task[filter].toLowerCase().includes(search.toLowerCase()))
+                let results2;
 
-                resolve(results2);
+                if(filter === "dueDate") {
+                    results2 = result = result.filter(task => {
+                        let k = changeDateFormat(task[filter]).toLowerCase();
+                        return k.includes(search);
+                    });
+
+                    resolve(results2);
+                } else {
+                    results2 = result.filter(task => {
+                        return task[filter].toLowerCase().includes(search.toLowerCase())
+                    })
+    
+                    resolve(results2);
+                }
+
+                
             }
         })
     }

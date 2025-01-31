@@ -234,7 +234,7 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
 }
 
 .task-categories .category-settings .promt-message {
-    display: none;
+    display: flex;
     flex-flow: column nowrap;
    outline: 1px solid var(--secondary-color-2);
    background-color: var(--primary-color);
@@ -248,9 +248,13 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 5;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .3s ease-out;
 }
 .task-categories .category-settings .promt-message.show-promt-message {
-    display: flex;
+    visibility: visible;
+    opacity: 1;
 }
 
 .task-categories .category-settings .promt-message-overlay {
