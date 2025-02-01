@@ -1,6 +1,8 @@
 # Demi Tasks Manager
 A efficient task management application that allows you to organize your tasks, track progress, and analyze your productivity.
 
+[Live Demo](https://demitasks.vercel.app)
+
 ## Features
 - **Task Management:** Create, edit, and delete tasks with ease.
 - **To-Do List:** Create, edit, and delete tasks with ease.
@@ -23,4 +25,3 @@ A efficient task management application that allows you to organize your tasks, 
 - Implement a reminder system for due tasks.
 - Add notification support for scheduled tasks.
 
-[Live Demo](https://demitasks.vercel.app)
