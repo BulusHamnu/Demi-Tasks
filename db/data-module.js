@@ -74,6 +74,9 @@ export class taskMangerDb {
                         {
                           name: "🛠️maintenance"
                         },
+                        {
+                          name: "📖 writing"
+                        },
                       
                       ];
                     
@@ -101,7 +104,12 @@ export class taskMangerDb {
 
             const request = taskStore.add(data)
             request.onsuccess = (event) => {
-                resolve("saved");
+
+                this.transaction.oncomplete = () => {
+                    console.log("Transaction completed.");
+                    resolve("saved");
+                };
+
             }
 
             request.onerror = (event) => {
