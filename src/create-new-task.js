@@ -532,7 +532,7 @@ if (taskId) {
         document.querySelectorAll("textarea").forEach((textarea) => {textarea.value = ""});
 
         alert("Added task");
-        setTimeout(() => {window.location.href = "allTasks.html";},300)
+        setTimeout(() => {window.location.href = "alltasks.html";},300)
       } else {
         alert("Failed to add task try saving again");
       }
