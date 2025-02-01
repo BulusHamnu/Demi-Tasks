@@ -243,8 +243,8 @@ input[type="date"], input[type="datetime"], input[type="time"], select {
    max-width: 25rem;
    height: 10rem;
    border-radius: .2rem;
-   position: absolute;
-    top: 50%;
+   position: fixed;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 5;

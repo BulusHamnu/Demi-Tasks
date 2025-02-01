@@ -85,10 +85,12 @@ function searchTask() {
 
     db.searchTask(searchBox.value,searchFilter).then((results) => {
         if(results.length > 0) {
-            renderTasks(results)
+            renderTasks(results);
+            searchBox.value = "";
         } else {
             taskGrid.style.display = "block";
             taskGrid.innerHTML = "<h2 class='no-task'>No tasks found for this " + searchBox.value + ".</h2>";
+            searchBox.value = "";
         }
     });
 

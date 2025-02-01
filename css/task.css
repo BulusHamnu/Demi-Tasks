@@ -234,10 +234,10 @@
 
 .input-new-task {
     width: 16rem;
-    position: absolute;
-        top: 0%;
+    position: fixed;
+        top: 40%;
         left: 50%;
-        transform: translate(-50%, 50%);
+        transform: translate(-50%, -50%);
     margin-bottom: 1.5rem;
     display: none;
     align-items: center;

@@ -367,7 +367,9 @@ body.dark-theme .vc-arrow:before {
         grid-template-rows: auto 400px;
     }
     
-    
+    .highlight ul {
+        margin-top: 0;
+    }
 }
   
 
