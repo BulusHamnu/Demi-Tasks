@@ -50,6 +50,14 @@ export function changeDateFormat(dateData) {
 
     return `${date} ${month} ${year}`
 }
+export function changeDateFormatNumber(dateData) {
+    let dateFormat = new Date(dateData);
+    let date = dateFormat.getDate();
+    let month = dateFormat.getMonth();
+    let year = dateFormat.getFullYear();
+    
+    return `${year}-${month}-${date}`
+}
 
 
 
@@ -80,5 +88,37 @@ export function checkForDued(taskDueDate) {
     }
 }
 
+
+/* send nofitication function */
+export function sendNofitication(title,message) {
+
+    const options = {
+        body: message,
+        icon: "../assert/file-covers/image.png",
+      };
+    
+    if (!("Notification" in window)) {
+        alert("This browser does not support notifications.");
+      } else if(Notification.permission === "granted") {
+        const notification = new Notification(title,options);
+      } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then( permission => {
+          if (permission === "granted") {
+            const notification = new Notification(title,options);
+          }
+        });
+  
+      }
+}
+
+
+/* getting current time for notiufication */
+export function getCurrentTime() {
+    const now = new Date();
+    const hours = now.getHours();   // 0-23 (24-hour format)
+    const minutes = now.getMinutes();
+    return hours + ':' + minutes;
+  
+}
 
 
