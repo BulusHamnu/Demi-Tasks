@@ -122,9 +122,9 @@ if(taskId) {
     if (enabled) {
       addReminderToogle.checked = true;
       addReminderToogle.click();
-
       document.getElementById("reminder-type").querySelectorAll("option").forEach( option => {
-        if(option.value === reminderDetails.type) { option.selected = true; }
+
+        if(option.value === reminderDetails.type.trim()) { option.selected = true; }
       }) 
 
       reminderCalander.value = reminderDetails.date;
@@ -355,7 +355,7 @@ function addCustomCategory(event) {
 
 
 reminderSelector.addEventListener("change",() => {
-  reminderType = reminderSelector.value;
+  reminderType = reminderSelector.value.trim();
   
 })
 
@@ -504,7 +504,7 @@ let newTask = {
   category : taskCategory ,
   reminder : enabled,
   reminderDetails : {
-      type : ` ${reminderType? reminderType: "daily"}` ,
+      type : `${reminderType?reminderType: "daily"}` ,
       date : reminderDay ,
       time : reminderTime
   },

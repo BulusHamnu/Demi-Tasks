@@ -29,7 +29,7 @@ export class taskMangerDb {
             request.onsuccess = (event) => {
                 this.db = event.target.result;
                 resolve(this.db);
-                console.log("index db opened successfully ", this.db);
+                // console.log("index db opened successfully ", this.db);
 
             };
 
@@ -106,7 +106,7 @@ export class taskMangerDb {
             request.onsuccess = (event) => {
 
                 this.transaction.oncomplete = () => {
-                    console.log("Transaction completed.");
+        
                     resolve("saved");
                 };
 
@@ -264,7 +264,10 @@ export class taskMangerDb {
                 const task = event.target.result;
                 Object.assign(task, taskDetails);
                 taskStore.put(task);
-                resolve("task updated");
+                this.transaction.oncomplete = () => {
+
+                    resolve("task updated");
+                };
             }
         })
     }
