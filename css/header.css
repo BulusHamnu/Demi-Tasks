@@ -169,22 +169,25 @@ p {
 }
 
 .notifications-display {
-    height: 24rem;
-    width: 85%;
-    max-width: 25rem;
-    background-color: var(--primary-color);
+    height: 30rem;
+    width: 97%;
+    max-width: 30rem;
+    background-color: var(--secondary-color);
     border: 2px solid var(--text-color);
     border-radius: .3rem;
     position: fixed;
-        top: 40%;
+        top: 44%;
         left: 50%;
         transform: translate(-50%, -50%);
     z-index: 3;
     padding: .5rem;
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease-in;
 }
 .notifications-display.show-reminders {
-    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 .notifications-display .reminders{
     height: 20rem;
@@ -215,7 +218,7 @@ p {
     background-color: var(--secondary-color-2);
 }
 .notifications-display .task-reminders{
-    background-color: var(--secondary-color);
+    background-color: var(--secondary-color-2);
     border-radius: .2rem;
     display: flex;
     flex-flow: row wrap;
@@ -223,7 +226,7 @@ p {
     align-items: center;
     padding: .3rem;
     margin-bottom: .05rem;
-    height: 2.7rem;
+    min-height: 2.7rem;
 }
 
 /* all svg color code */
@@ -296,9 +299,10 @@ svg:not(.search-item) {
     .notifications-display {
         position: absolute;
         top: 70%;
-        left: 57%;
+        left: 52%;
         right: 0%;
         transform: translate(0%, 0%);
+        height: 26rem;
     }
 }
   
