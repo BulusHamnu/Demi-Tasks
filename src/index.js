@@ -13,6 +13,11 @@ let datasetPercents;
 const db = new taskMangerDb()
 let allTasks;
 const periodSelector = document.querySelector("#period-selector");
+let NotificationBtn = document.querySelector(".notification");
+
+
+
+
 
 const detailCard = document.querySelectorAll(".detail-card").forEach( card => {
   card.addEventListener("click", () => {
@@ -313,10 +318,15 @@ function runApp(tasks) {
 
 
 
-/* notification function */
+/* notification functions */
+NotificationBtn.addEventListener("click", () => { document.querySelector(".notifications-display").classList.add("show-reminders"); });
+document.querySelector(".close-notifications-display").addEventListener("click", () => document.querySelector(".notifications-display").classList.remove("show-reminders"));
+
 
 let reminders = [];
+let remindersPro;
 
+/* check for reminder */
 let checkForNotifications = () => {
   if(allTasks.length > 0) {
     allTasks.forEach(task => {
@@ -364,55 +374,73 @@ let checkForNotifications = () => {
 
     });
 
-    document.querySelector(".notification").classList.add("new-message");
-
 
     /* check for reminder when page load */
     let currentTime = getCurrentTime();
+    let removeIndexes = [];
 
-    reminders.forEach(reminder => {
+    reminders.forEach((reminder,index) => {
       if(reminder.time === currentTime) {
 
        setTimeout(() => {
         sendNofitication("Reminder",`${reminder.title} is now`);
        }, 1500);
+       removeIndexes.push(index);
 
       } else if (reminder.time  < currentTime){
+
         let today = new Date().toISOString().split("T")[0];
 
         /* geting this formulass from stack overflow */
         let date1 = new Date(`${today}T${reminder.time}`);
         let date2 = new Date(`${today}T${currentTime}`);
         let diff = date2 - date1;
-        
+
         if(parseInt(backToTime(diff)) < 1) {
           sendNofitication("Reminder",`You missed ${reminder.title} :(`);
         }
 
+        removeIndexes.push(index);
       }
     
     });
 
+    /* filter task that that are already due */
+    remindersPro = reminders.filter((reminder,index) => {return !removeIndexes.includes(index);});
+
+    if(remindersPro.length > 0) {
+      NotificationBtn.classList.add("new-message");
+    }
+
+    renderReminder(remindersPro);
     setRemnderForLater(reminders);
+
   }
   
 }
 
-function setRemnderForLater(reminders) {
+/* shedule reminders for later */
+function setRemnderForLater() {
   
   setInterval(() => {
     let currentTime = getCurrentTime();
 
-    reminders.forEach(reminder => {
-      if(reminder.time === currentTime) {
+    remindersPro.forEach((reminder,index) => {
+      if(reminder.time === currentTime) { 
 
        setTimeout(() => {
         sendNofitication("Reminder",`${reminder.title} is now`);
+        remindersPro.splice(index, 1);
+
+        if(remindersPro.length <= 0 ) {NotificationBtn.classList.remove("new-message");}
+        
+        renderReminder(remindersPro);
        }, 1500);
 
       } 
     
     });
+
   },60000);
 
   
@@ -432,6 +460,28 @@ function backToTime(diff) {
   return mm;
 }
 
+
+/* redering reminders */
+function renderReminder (a) {
+  
+  document.querySelector(".reminders").innerHTML = '';
+  if(a.length > 0) {
+    a.forEach( reminder => {
+      
+      let list = document.createElement("li");
+      list.classList.add("task-reminders");
+      list.innerHTML = `
+        <p class="task-title">${reminder.title}</p>
+        <p class="task-time">Time: ${reminder.time}</p>
+      `;
+  
+      document.querySelector(".reminders").appendChild(list);
+    })
+
+  } else {
+    document.querySelector(".reminders").innerHTML = "<p>No Reminder Available.</p>";
+  }
+}
 
 
   

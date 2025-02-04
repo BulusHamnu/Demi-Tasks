@@ -168,6 +168,64 @@ p {
     display: block;
 }
 
+.notifications-display {
+    height: 24rem;
+    width: 85%;
+    max-width: 25rem;
+    background-color: var(--primary-color);
+    border: 2px solid var(--text-color);
+    border-radius: .3rem;
+    position: fixed;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    z-index: 3;
+    padding: .5rem;
+    display: none;
+}
+.notifications-display.show-reminders {
+    display: block;
+}
+.notifications-display .reminders{
+    height: 20rem;
+    width: 100%;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+.notifications-display .reminders::-webkit-scrollbar {
+    width: 0;
+}
+
+.notifications-display h3{
+    color: var(--text-color);
+    margin-bottom: 0.8rem;
+}
+.notifications-display .close-notifications-display{
+    position: absolute;
+        top: 2%;
+        right: 2%;
+    background-color: var(--secondary-color);
+    border: none;
+    border-radius: .2rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color .2s linear;
+}
+.notifications-display .close-notifications-display:hover{
+    background-color: var(--secondary-color-2);
+}
+.notifications-display .task-reminders{
+    background-color: var(--secondary-color);
+    border-radius: .2rem;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: .3rem;
+    margin-bottom: .05rem;
+    height: 2.7rem;
+}
+
 /* all svg color code */
 svg:not(.search-item) {
     fill: var(--text-color);
@@ -235,7 +293,13 @@ svg:not(.search-item) {
   
 
 @media (min-width: 992px) {
-    
+    .notifications-display {
+        position: absolute;
+        top: 70%;
+        left: 57%;
+        right: 0%;
+        transform: translate(0%, 0%);
+    }
 }
   
   
