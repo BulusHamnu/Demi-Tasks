@@ -119,7 +119,10 @@ export function sendNofitication(title,message) {
 export function getCurrentTime() {
     const now = new Date();
     const hours = now.getHours();   // 0-23 (24-hour format)
-    const minutes = now.getMinutes();
+    let minutes = now.getMinutes();
+    if (minutes <= 9) {
+      minutes = "0" + minutes;
+    }
     return hours + ':' + minutes;
   
 }

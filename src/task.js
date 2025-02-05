@@ -13,8 +13,7 @@ const progressText = document.querySelector(".progress-text");
 const fileCont = document.querySelector(".file-cont");
 const addNewSubTask = document.querySelector(".add-sub-task");
 const taskProgressBar = document.querySelector(".progress-bar");
-let editBtn = document.querySelector(".edit-task")
-
+let editBtn = document.querySelector(".edit-task");
 
 
 const db = new taskMangerDb()
@@ -45,8 +44,6 @@ if(taskId) {
     document.querySelector("main").innerHTML = "<h1>No task found</h1>";
     window.location.href = "alltasks.html";
 }
-
-
 
 
 
@@ -217,9 +214,9 @@ function deleteTask_(event) {
 
 /* editing task */
 function editTask(event) {
-    let taskId = event.target.dataset.taskid
+    let taskId = event.currentTarget.dataset.taskid;
     if(taskId) {
-        window.location.href = `create-new-task.html?editid=${taskId}`
+        window.location.href = `create-new-task.html?editid=${taskId}`;
     }
 }
 
