@@ -472,7 +472,7 @@ function renderReminder (a) {
       list.classList.add("task-reminders");
       list.innerHTML = `
         <p class="task-title">${reminder.title}</p>
-        <p class="task-time">Time: ${reminder.time}</p>
+        <p class="task-time">Time: ${changeFormat(reminder.time)} ${reminder.time >= "12:00"? "PM" : "AM"}</p>
       `;
   
       document.querySelector(".reminders").appendChild(list);
@@ -481,6 +481,15 @@ function renderReminder (a) {
   } else {
     document.querySelector(".reminders").innerHTML = "<p>No Reminder Available.</p>";
   }
+}
+
+/* change time format to 12 hour */
+function changeFormat(time){
+  let today = new Date().toISOString().split("T")[0];
+
+  let timeFormat = new Date(`${today}T${time}`).toLocaleString([], { hour12: true}).split(",")[1];
+
+  return timeFormat.slice(0,6)
 }
 
 
