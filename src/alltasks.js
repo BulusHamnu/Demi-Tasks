@@ -1,6 +1,5 @@
 import { taskMangerDb } from "../db/data-module.js";
-import {changeDateFormat} from "../src/utils/functions.js";
-import {checkForDued} from "./utils/functions.js";
+import {changeDateFormat,Notifiyer,checkForDued} from "../src/utils/functions.js";
 let search = document.querySelector(".search");
 let searchItem = document.querySelector(".search-item");
 const searchBox = document.querySelector(".search-box");
@@ -12,6 +11,15 @@ const header = document.querySelector("header");
 const statusTabs = document.querySelectorAll(".category-tab");
 const sortByselector = document.querySelector("#sort-category")
 const db =  new taskMangerDb()
+const Nd = new Notifiyer()
+
+let NotificationBtn = document.querySelector(".notification");
+NotificationBtn.addEventListener("click", () => { document.querySelector(".notifications-display").classList.add("show-reminders"); });
+document.querySelector(".close-notifications-display").addEventListener("click", () => document.querySelector(".notifications-display").classList.remove("show-reminders"));
+
+
+db.getAllTasks("all").then((g) =>{ Nd.checkForNotifications(g)}); //so event if a seting task category should be render, reminder for all tasks will be shown
+
 
 
 /* setting sorting options*/
@@ -23,8 +31,6 @@ db.getAllCategories().then( data => {
         sortByselector.appendChild(newOption);
     })
 })
-
-
 
 
 /* if tasks are to be render buy there duedate */
@@ -155,7 +161,6 @@ function getAllTasks() {
 }
 
 
-
 /* seach for tasks by status and sortby function*/
 function searchByStatus(search,sort) {
     
@@ -213,7 +218,8 @@ function renderTasks(tasks) {
 
         taskGrid.appendChild(newTask)
 
-    })
+    });
+    
 }
 
 

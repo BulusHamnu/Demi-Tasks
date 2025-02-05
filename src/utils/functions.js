@@ -1,3 +1,6 @@
+import { getWeek } from "https://cdn.jsdelivr.net/npm/date-fns/getWeek.mjs";
+let NotificationBtn = document.querySelector(".notification");
+
 export function getFileCoverType(fileType) {
     let coverLink;
 
@@ -88,7 +91,7 @@ export function checkForDued(taskDueDate) {
     }
 }
 
-
+ 
 /* send nofitication function */
 export function sendNofitication(title,message) {
 
@@ -121,4 +124,171 @@ export function getCurrentTime() {
   
 }
 
+/* change time format to 12 hour */
+export function changeFormat(time){
+    let today = new Date().toISOString().split("T")[0];
+  
+    let timeFormat = new Date(`${today}T${time}`).toLocaleString([], { hour12: true}).split(",")[1];
+  
+    return timeFormat.slice(0,6)
+}
 
+
+/* class for checking notification sheduling notification */
+export class Notifiyer {
+    constructor() {
+        this.reminders = [];
+        this.remindersPro = [];
+    }
+
+    checkForNotifications (tasks) {
+
+      if(tasks.length > 0) {
+        tasks.forEach(task => {
+          if(task.reminderDetails.type.trim() === "daily") {
+            let newReminder = {
+              title : task.title,
+              time : task.reminderDetails.time,
+            };
+            this.reminders.push(newReminder);
+    
+          } else if(task.reminderDetails.type.trim() === "weekly") {
+            let week = getWeek(new Date(task.reminderDetails.date), { weekStartsOn: 0 });
+            let thisWeek = getWeek(new Date(), { weekStartsOn: 0 });
+            
+            let now = new Date().toISOString().split("T")[0];
+    
+              if(week === thisWeek && task.reminderDetails.date === now ) {
+                let newReminder = {
+                  title : task.title,
+                  time : task.reminderDetails.time,
+                };
+                this.reminders.push(newReminder);
+    
+              }
+          } else if(task.reminderDetails.type.trim() === "monthly" && new Date(task.reminderDetails.date).getMonth() === new Date().getMonth()) {
+            if(new Date(task.reminderDetails.date).getDate() === new Date().getDate()) {
+              let newReminder = {
+                title : task.title,
+                time : task.reminderDetails.time,
+              };
+              this.reminders.push(newReminder);
+            }
+            
+          } else if(task.reminderDetails.type === "yearly" && new Date(task.reminderDetails.date).getFullYear() === new Date().getFullYear()) {
+            if(task.reminderDetails.date === new Date().toISOString().split("T")[0]) {
+              let newReminder = {
+                title : task.title,
+                time : task.reminderDetails.time,
+              };
+              this.reminders.push(newReminder);
+    
+            }
+          }
+    
+        });
+    
+    
+        /* check for reminder when page load */
+        let currentTime = getCurrentTime();
+        let removeIndexes = [];
+        this.reminders.forEach((reminder,index) => {
+          if(reminder.time === currentTime) {
+    
+           setTimeout(() => {
+            sendNofitication("Reminder",`${reminder.title} is now`);
+           }, 1500);
+           removeIndexes.push(index);
+    
+          } else if (reminder.time  < currentTime){
+    
+            let today = new Date().toISOString().split("T")[0];
+    
+            /* geting this formulass from stack overflow */
+            let date1 = new Date(`${today}T${reminder.time}`);
+            let date2 = new Date(`${today}T${currentTime}`);
+            let diff = date2 - date1;
+    
+            if(parseInt(this.backToTime(diff)) < 1) {
+              sendNofitication("Reminder",`You missed ${reminder.title} :(`);
+            }
+    
+            removeIndexes.push(index);
+          }
+        
+        });
+    
+        /* filter task that that are already due */
+        this.remindersPro = this.reminders.filter((reminder,index) => {return !removeIndexes.includes(index);});
+    
+        if(this.remindersPro.length > 0) {
+          NotificationBtn.classList.add("new-message");
+        }
+    
+        this.renderReminder(this.remindersPro);
+        this.setRemnderForLater(this.reminders);
+    
+      }
+      
+    }
+
+    setRemnderForLater() {
+      
+      setInterval(() => {
+        let currentTime = getCurrentTime();
+    
+        this.remindersPro.forEach((reminder,index) => {
+          if(reminder.time === currentTime) { 
+    
+           setTimeout(() => {
+            sendNofitication("Reminder",`${reminder.title} is now`);
+            this.remindersPro.splice(index, 1);
+    
+            if(this.remindersPro.length <= 0 ) {NotificationBtn.classList.remove("new-message");}
+            
+            this.renderReminder(this.remindersPro);
+           }, 1500);
+    
+          } 
+        
+        });
+    
+      },60000);
+    
+      
+    }
+
+    backToTime(diff) {
+
+        let ms = diff % 1000;
+        let ss = Math.floor(diff / 1000) % 60;
+        let mm = Math.floor(diff / 1000 / 60) % 60;
+        let hh = Math.floor(diff / 1000 / 60 / 60);
+      
+        // console.log(`${diff}ms = ${hh}hr, ${mm}min, ${ss}sec, ${ms}ms`);
+      
+        return mm;
+    }
+
+    renderReminder (a) {
+  
+        document.querySelector(".reminders").innerHTML = '';
+        if(a.length > 0) {
+          a.forEach( reminder => {
+            
+            let list = document.createElement("li");
+            list.classList.add("task-reminders");
+            list.innerHTML = `
+              <p class="task-title">${reminder.title}</p>
+              <p class="task-time">Time: ${changeFormat(reminder.time)} ${reminder.time >= "12:00"? "PM" : "AM"}</p>
+            `;
+        
+            document.querySelector(".reminders").appendChild(list);
+          })
+      
+        } else {
+          document.querySelector(".reminders").innerHTML = "<p>No Reminder Available.</p>";
+        }
+      }
+
+}

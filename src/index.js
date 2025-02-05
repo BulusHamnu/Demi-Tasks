@@ -1,21 +1,22 @@
 /* Dashboard scrpt */
 const { Calendar } = window.VanillaCalendarPro;
-import { getISOWeek } from "https://cdn.jsdelivr.net/npm/date-fns/getISOWeek.mjs";
 import { getWeek } from "https://cdn.jsdelivr.net/npm/date-fns/getWeek.mjs";
 import  {taskMangerDb} from "../db/data-module.js"
-import {setFillPercent, getCurrentTime} from "./utils/functions.js"
-import {getPercentage,sendNofitication} from "./utils/functions.js"
+import {setFillPercent,getPercentage,Notifiyer} from "./utils/functions.js"
 const taskChart = document.getElementById('task-chart');
 const canvas = document.querySelector('canvas'); 
 let aspectRatio;
 let dataset; 
 let datasetPercents;
 const db = new taskMangerDb()
+const Nd = new Notifiyer()
 let allTasks;
 const periodSelector = document.querySelector("#period-selector");
+
+
 let NotificationBtn = document.querySelector(".notification");
-
-
+NotificationBtn.addEventListener("click", () => { document.querySelector(".notifications-display").classList.add("show-reminders"); });
+document.querySelector(".close-notifications-display").addEventListener("click", () => document.querySelector(".notifications-display").classList.remove("show-reminders"));
 
 
 
@@ -26,10 +27,6 @@ const detailCard = document.querySelectorAll(".detail-card").forEach( card => {
   })
 })
 
-
-// https://vanilla-calendar.pro/docs/learn/handle-get-and-change-every-day
-
-/* getting all tasks */
 
 
 /* stray haha functions */
@@ -107,12 +104,10 @@ function setAmountOfTasks(tasksDate,dates) {
 /* end of stray function */
 
 
-
-
 db.getAllTasks("all").then((tasks) => {
   allTasks = tasks;
   runApp(tasks);
-  checkForNotifications()
+  Nd.checkForNotifications(tasks);
 
   
   periodSelector.addEventListener("change", () => {
@@ -318,179 +313,6 @@ function runApp(tasks) {
 
 
 
-/* notification functions */
-NotificationBtn.addEventListener("click", () => { document.querySelector(".notifications-display").classList.add("show-reminders"); });
-document.querySelector(".close-notifications-display").addEventListener("click", () => document.querySelector(".notifications-display").classList.remove("show-reminders"));
-
-
-let reminders = [];
-let remindersPro;
-
-/* check for reminder */
-let checkForNotifications = () => {
-  if(allTasks.length > 0) {
-    allTasks.forEach(task => {
-
-      if(task.reminderDetails.type.trim() === "daily") {
-        let newReminder = {
-          title : task.title,
-          time : task.reminderDetails.time,
-        };
-        reminders.push(newReminder);
-
-      } else if(task.reminderDetails.type.trim() === "weekly") {
-        let week = getWeek(new Date(task.reminderDetails.date), { weekStartsOn: 0 });
-        let thisWeek = getWeek(new Date(), { weekStartsOn: 0 });
-        
-        let now = new Date().toISOString().split("T")[0];
-
-          if(week === thisWeek && task.reminderDetails.date === now ) {
-            let newReminder = {
-              title : task.title,
-              time : task.reminderDetails.time,
-            };
-            reminders.push(newReminder);
-
-          }
-      } else if(task.reminderDetails.type.trim() === "monthly" && new Date(task.reminderDetails.date).getMonth() === new Date().getMonth()) {
-        if(new Date(task.reminderDetails.date).getDate() === new Date().getDate()) {
-          let newReminder = {
-            title : task.title,
-            time : task.reminderDetails.time,
-          };
-          reminders.push(newReminder);
-        }
-        
-      } else if(task.reminderDetails.type === "yearly" && new Date(task.reminderDetails.date).getFullYear() === new Date().getFullYear()) {
-        if(task.reminderDetails.date === new Date().toISOString().split("T")[0]) {
-          let newReminder = {
-            title : task.title,
-            time : task.reminderDetails.time,
-          };
-          reminders.push(newReminder);
-
-        }
-      }
-
-    });
-
-
-    /* check for reminder when page load */
-    let currentTime = getCurrentTime();
-    let removeIndexes = [];
-
-    reminders.forEach((reminder,index) => {
-      if(reminder.time === currentTime) {
-
-       setTimeout(() => {
-        sendNofitication("Reminder",`${reminder.title} is now`);
-       }, 1500);
-       removeIndexes.push(index);
-
-      } else if (reminder.time  < currentTime){
-
-        let today = new Date().toISOString().split("T")[0];
-
-        /* geting this formulass from stack overflow */
-        let date1 = new Date(`${today}T${reminder.time}`);
-        let date2 = new Date(`${today}T${currentTime}`);
-        let diff = date2 - date1;
-
-        if(parseInt(backToTime(diff)) < 1) {
-          sendNofitication("Reminder",`You missed ${reminder.title} :(`);
-        }
-
-        removeIndexes.push(index);
-      }
-    
-    });
-
-    /* filter task that that are already due */
-    remindersPro = reminders.filter((reminder,index) => {return !removeIndexes.includes(index);});
-
-    if(remindersPro.length > 0) {
-      NotificationBtn.classList.add("new-message");
-    }
-
-    renderReminder(remindersPro);
-    setRemnderForLater(reminders);
-
-  }
-  
-}
-
-/* shedule reminders for later */
-function setRemnderForLater() {
-  
-  setInterval(() => {
-    let currentTime = getCurrentTime();
-
-    remindersPro.forEach((reminder,index) => {
-      if(reminder.time === currentTime) { 
-
-       setTimeout(() => {
-        sendNofitication("Reminder",`${reminder.title} is now`);
-        remindersPro.splice(index, 1);
-
-        if(remindersPro.length <= 0 ) {NotificationBtn.classList.remove("new-message");}
-        
-        renderReminder(remindersPro);
-       }, 1500);
-
-      } 
-    
-    });
-
-  },60000);
-
-  
-}
-
-
-/* Function for changing time back to default time value */
-function backToTime(diff) {
-
-  let ms = diff % 1000;
-  let ss = Math.floor(diff / 1000) % 60;
-  let mm = Math.floor(diff / 1000 / 60) % 60;
-  let hh = Math.floor(diff / 1000 / 60 / 60);
-
-  // console.log(`${diff}ms = ${hh}hr, ${mm}min, ${ss}sec, ${ms}ms`);
-
-  return mm;
-}
-
-
-/* redering reminders */
-function renderReminder (a) {
-  
-  document.querySelector(".reminders").innerHTML = '';
-  if(a.length > 0) {
-    a.forEach( reminder => {
-      
-      let list = document.createElement("li");
-      list.classList.add("task-reminders");
-      list.innerHTML = `
-        <p class="task-title">${reminder.title}</p>
-        <p class="task-time">Time: ${changeFormat(reminder.time)} ${reminder.time >= "12:00"? "PM" : "AM"}</p>
-      `;
-  
-      document.querySelector(".reminders").appendChild(list);
-    })
-
-  } else {
-    document.querySelector(".reminders").innerHTML = "<p>No Reminder Available.</p>";
-  }
-}
-
-/* change time format to 12 hour */
-function changeFormat(time){
-  let today = new Date().toISOString().split("T")[0];
-
-  let timeFormat = new Date(`${today}T${time}`).toLocaleString([], { hour12: true}).split(",")[1];
-
-  return timeFormat.slice(0,6)
-}
 
 
   
