@@ -18,7 +18,9 @@ NotificationBtn.addEventListener("click", () => { document.querySelector(".notif
 document.querySelector(".close-notifications-display").addEventListener("click", () => document.querySelector(".notifications-display").classList.remove("show-reminders"));
 
 
-db.getAllTasks("all").then((g) =>{ Nd.checkForNotifications(g)}); //so event if a seting task category should be render, reminder for all tasks will be shown
+db.getAllTasks("all").then((g) =>{
+    Nd.checkForNotifications(g.filter(task => task.reminder === true));
+}); //so event if a seting task category should be render, reminder for all tasks will be shown
 
 
 

@@ -231,9 +231,12 @@ export class Notifiyer {
         this.renderReminder(this.remindersPro);
         this.setRemnderForLater(this.reminders);
     
+      } else {
+        this.remindersPro = [];
+        this.renderReminder(this.remindersPro);
       }
       
-    }
+    } 
 
     setRemnderForLater() {
       

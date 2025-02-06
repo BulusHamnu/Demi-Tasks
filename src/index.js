@@ -107,7 +107,7 @@ function setAmountOfTasks(tasksDate,dates) {
 db.getAllTasks("all").then((tasks) => {
   allTasks = tasks;
   runApp(tasks);
-  Nd.checkForNotifications(tasks);
+  Nd.checkForNotifications(tasks.filter(task => task.reminder === true));
 
   
   periodSelector.addEventListener("change", () => {
