@@ -97,7 +97,7 @@ export function sendNofitication(title,message) {
 
     const options = {
         body: message,
-        icon: "../assert/file-covers/image.png",
+        icon: "../assert/Demi-Tasks_LOGO.png",
       };
     
     if (!("Notification" in window)) {
