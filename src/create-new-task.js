@@ -505,8 +505,8 @@ let newTask = {
   reminder : enabled,
   reminderDetails : {
       type : `${reminderType?reminderType: "daily"}` ,
-      date : reminderDay ,
-      time : reminderTime
+      date : `${reminderDay? reminderDay : new Date().toISOString().split("T")[0] }`, 
+      time : `${reminderTime? reminderTime : "10:00" }`,
   },
   subTasks : subTasks,
   attachment : attachments
