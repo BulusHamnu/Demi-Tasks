@@ -148,6 +148,9 @@ export class Notifiyer {
 
       if(tasks.length > 0) {
         tasks.forEach(task => {
+          if(checkForDued(task.dueDate)){
+            return
+          }
           if(task.reminderDetails.type.trim() === "daily") {
             let newReminder = {
               title : task.title,

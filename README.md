@@ -22,6 +22,6 @@ A efficient task management application that allows you to organize your tasks, 
 - Chart.js (for task analysis and statistics)
 
 ## Future Plans
-- Implement a reminder system for due tasks.
-- Add notification support for scheduled tasks.
+- Implement a reminder system for due tasks : Because this app does'nt deal with any backend it a frontend app i'm not able to send reminder fron server or something like that. but i did create a reminder system but it lost track of time when you refresh or move to another page `settimeout`. but there is a way to make that better. in the future i will turn this into a react app and then make set the reminder time/system as a `STATE VARIABLE` in that case as long as you are on the app it will not change and also even if you leave and come back it will just set it like from the begining.
+
 
