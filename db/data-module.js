@@ -42,6 +42,81 @@ export class taskMangerDb {
                     taskStore.createIndex("category", "category", { unique: false });
                     taskStore.createIndex("status", "status", { unique: false });
                     taskStore.createIndex("priority", "priority", { unique: false });
+
+                    // defaults tasks for new usr
+                    const blobFile = new Blob(["This is just an example, when you add attachment to your task."], { type: "txt" });
+
+                    const defaultTasks = [
+                        {
+                            title : "Organize Workspace",
+                            description : "A cluttered workspace can reduce focus and productivity. Take time to arrange your desk, remove unnecessary items, and organize your work materials properly. A clean and structured environment makes it easier to find important documents and stay on top of tasks. Maintaining an organized workspace also helps create a sense of control and reduces stress during work hours.",
+                            dueDate : new Date().toISOString().split("T")[0],
+                            priority : "🟡 medium",
+                            status : "🔲 in-completed",
+                            category : "💼 business",
+                            reminder : false,
+                            reminderDetails : {
+                              type : "daily" ,
+                              date : new Date().toISOString().split("T")[0] , 
+                              time : "10:00",
+                                },
+                            subTasks : [
+                                {
+                                    title: "Remove unnecessary items from the desk",
+                                    done : false
+                                },
+                                {
+                                    title: "Organize important documents into labeled folders",
+                                    done : false
+                                },
+                                {
+                                    title: "Clean the computer screen and keyboard",
+                                    done : false
+                                }
+                            ],
+                            attachment : [
+                                {
+                                    name: "Dummy document",
+                                    type: blobFile.type,
+                                    lastModified: Date.now(),
+                                    fileData: blobFile
+                                }
+                            ],
+                        },
+                        {
+                            title : "Plan the Week",
+                            description : "A well-structured plan helps you stay ahead of deadlines and manage time effectively. At the start of the week, outline key objectives, upcoming deadlines, and important meetings. This ensures you prioritize important tasks and maintain a clear focus on what needs to be accomplished. Regular planning also helps track progress, avoid last-minute stress, and improve overall productivity throughout the week.",
+                            dueDate : new Date().toISOString().split("T")[0],
+                            priority : "🔥high",
+                            status : "🔲 in-completed",
+                            category : "👤 personal",
+                            reminder : true,
+                            reminderDetails : {
+                              type : "monthly" ,
+                              date : new Date().toISOString().split("T")[0] , 
+                              time : "10:00",
+                                },
+                            subTasks : [
+                                {
+                                    title: "Identify the top three priorities for the week",
+                                    done : false
+                                },
+                                {
+                                    title: "Review upcoming deadlines and schedule necessary tasks",
+                                    done : false
+                                },
+                                {
+                                    title: "Plan meetings and important calls",
+                                    done : false
+                                }
+                            ],
+                            attachment : [],
+                        }
+                    ]
+
+                    defaultTasks.forEach( task => {
+                        taskStore.add(task)
+                    })
                 }
                 
 

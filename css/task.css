@@ -92,7 +92,7 @@
     background-color: var(--fitness-category-color);
 }
 
-.task-details .task-categorie-type[data-category-type="🎓 eduction"] {
+.task-details .task-categorie-type[data-category-type="🎓 education"] {
     background-color: var(--education-category-color);
 }
 .task-details .task-categorie-type[data-category-type="🛠️maintenance"] {
